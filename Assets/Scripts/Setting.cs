@@ -14,8 +14,8 @@ public class Setting : MonoBehaviour
     public Transform tabUI;
     public Transform tabShow;
 
-    public Transform keyInputs;
-    public List<TMP_InputField> keyInput;
+    public Transform keys;
+    public Transform Inputs;
 
     public List<GameObject> ModePc;
     public List<GameObject> ModeMobile;
@@ -51,13 +51,29 @@ public class Setting : MonoBehaviour
         }
     }
 
-    public void Duplication(string key)
+    public void Duplication(KeyCode key)
     {
-        for (int i = 0; i < keyInputs.childCount; i++)
+        for (int i = 0; i < Inputs.childCount; i++)
         {
-            TMP_InputField InputField = keyInputs.GetChild(i).GetChild(1).GetComponent<TMP_InputField>();
+            TMP_InputField InputField = Inputs.GetChild(i).GetChild(1).GetComponent<TMP_InputField>();
 
-            InputField.text = InputField.text == key && InputField != nowKeySet ? string.Empty : InputField.text;
+            if (InputField.text != string.Empty && InputField.text == KeyString(key.ToString()) && InputField != nowKeySet)
+            {
+                InputField.text = string.Empty;
+
+                if (i == 0)
+                {
+                    UiManager.instance.menuKey = KeyCode.None;
+                }
+                else
+                {
+                    UiManager.instance.keys[i - 1] = KeyCode.None;
+                }
+            }
+            else
+            {
+                InputField.text = InputField.text;
+            }
         }
 
         nowKeySet = null;
@@ -160,5 +176,34 @@ public class Setting : MonoBehaviour
         }
 
         return null;
+    }
+
+    public void SetKeysSprite()
+    {
+        for (int i = 0; i < keys.childCount; i++)
+        {
+            for (int j = 0; j < keys.GetChild(i).childCount; j++)
+            {
+                if (keys.GetChild(i).GetChild(j).GetComponent<InputThekey>() != null)
+                {
+                    keys.GetChild(i).GetChild(j).GetComponent<InputThekey>().SetKey();
+                }
+            }
+        }
+    }
+    public string KeyString(string key)
+    {
+        if (key.Contains("Alpha"))
+        {
+            return key.Replace("Alpha", string.Empty);
+        }
+
+        switch (key)
+        {
+            case "Escape":
+                return key = "Esc";
+            default:
+                return key;
+        }
     }
 }

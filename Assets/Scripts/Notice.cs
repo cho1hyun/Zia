@@ -48,41 +48,9 @@ public class Notice : MonoBehaviour
         }
     }
 
-    public void Set0()
+    public void Set(int n)
     {
-        nowNotice = 0;
-
-        prevBtn.SetActive(nowNotice != 0);
-        nextBtn.SetActive(nowNotice != noticeImgs.Count - 1);
-
-        noticeImg.sprite = noticeImgs[nowNotice];
-        noticeStr.text = noticeStrs[nowNotice];
-
-        for (int i = 0; i < NoticeBtnPar.childCount; i++)
-        {
-            NoticeBtnPar.GetChild(i).transform.GetChild(0).gameObject.SetActive(i == nowNotice);
-        }
-    }
-
-    public void Set1()
-    {
-        nowNotice = 1;
-
-        prevBtn.SetActive(nowNotice != 0);
-        nextBtn.SetActive(nowNotice != noticeImgs.Count - 1);
-
-        noticeImg.sprite = noticeImgs[nowNotice];
-        noticeStr.text = noticeStrs[nowNotice];
-
-        for (int i = 0; i < NoticeBtnPar.childCount; i++)
-        {
-            NoticeBtnPar.GetChild(i).transform.GetChild(0).gameObject.SetActive(i == nowNotice);
-        }
-    }
-
-    public void Set2()
-    {
-        nowNotice = 2;
+        nowNotice = n;
 
         prevBtn.SetActive(nowNotice != 0);
         nextBtn.SetActive(nowNotice != noticeImgs.Count - 1);
@@ -104,20 +72,8 @@ public class Notice : MonoBehaviour
             {
                 Button button = Instantiate(NoticeBtn, NoticeBtnPar).GetComponent<Button>();
 
-                switch (i)
-                {
-                    case 0:
-                        button.onClick.AddListener(Set0);
-                        break;
-                    case 1:
-                        button.onClick.AddListener(Set1);
-                        break;
-                    case 2:
-                        button.onClick.AddListener(Set2);
-                        break;
-                    default:
-                        break;
-                }
+                int index = i;
+                button.onClick.AddListener(delegate { Set(index); });
             }
 
             Next(0);
