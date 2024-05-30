@@ -39,7 +39,7 @@ public class Ingame : MonoBehaviour
 
     void SetKey()
     {
-        int a = 0;
+        int a = 4;
 
         for (int i = 0; i < SkillGroup.childCount; i++)
         {
