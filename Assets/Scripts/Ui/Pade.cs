@@ -11,8 +11,8 @@ public class Pade : MonoBehaviour
         switch (count)
         {
             case 0:
-                UiManager.instance.transform.GetChild(0).gameObject.SetActive(false);
-                UiManager.instance.transform.GetChild(2).gameObject.SetActive(true);
+                UiManager.Instance.transform.GetChild(0).gameObject.SetActive(false);
+                UiManager.Instance.transform.GetChild(2).gameObject.SetActive(true);
                 break;
             default:
                 break;

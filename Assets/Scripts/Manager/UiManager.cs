@@ -3,15 +3,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public enum Mode
-{
-    PC = 1,
-    Mobile = 2,
-}
-
 public class UiManager : MonoBehaviour
 {
-    public static UiManager instance;
+    public static UiManager Instance;
 
     public Pade pade;
 
@@ -28,7 +22,7 @@ public class UiManager : MonoBehaviour
 
     void Awake()
     {
-        instance = this;
+        Instance = this;
 
         if (load)
             for (int i = 0; i < transform.childCount; i++)

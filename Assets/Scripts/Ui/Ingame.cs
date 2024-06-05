@@ -25,7 +25,7 @@ public class Ingame : MonoBehaviour
 
     void Start()
     {
-        SetViewMode(UiManager.instance.mode);
+        SetViewMode(UiManager.Instance.mode);
 
         Tiktok.TimeSet();
 
@@ -34,7 +34,7 @@ public class Ingame : MonoBehaviour
 
     void Update()
     {
-        Time.timeScale = UiManager.instance.setting.gameObject.activeSelf ? 0 : 1;
+        Time.timeScale = UiManager.Instance.setting.gameObject.activeSelf ? 0 : 1;
     }
 
     void SetKey()
@@ -43,20 +43,20 @@ public class Ingame : MonoBehaviour
 
         for (int i = 0; i < SkillGroup.childCount; i++)
         {
-            SkillGroup.GetChild(i).GetComponent<Skill>().key = UiManager.instance.keys[a];
+            SkillGroup.GetChild(i).GetComponent<Skill>().key = UiManager.Instance.keys[a];
             a++;
         }
 
         for (int i = 0; i < Skills.childCount; i++)
         {
-            Skills.GetChild(i).GetComponent<Skill>().key = UiManager.instance.keys[a];
+            Skills.GetChild(i).GetComponent<Skill>().key = UiManager.Instance.keys[a];
             a++;
         }
     }
 
     public void WaitBtn()
     {
-        UiManager.instance.setting.ShowSettong(true);
+        UiManager.Instance.setting.ShowSettong(true);
     }
 
     public void SetViewMode(Mode mode)
@@ -68,6 +68,6 @@ public class Ingame : MonoBehaviour
             ModeMobile[i].SetActive(mode == Mode.Mobile);
 
         for (int i = 0; i < Key.Count; i++)
-            Key[i].SetActive(mode == Mode.PC && UiManager.instance.setting.ShowKey);
+            Key[i].SetActive(mode == Mode.PC && UiManager.Instance.setting.ShowKey);
     }
 }

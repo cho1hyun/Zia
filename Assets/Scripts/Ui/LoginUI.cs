@@ -63,7 +63,7 @@ public class LoginUI : MonoBehaviour
         gameObject.SetActive(false);
 
         if(login)
-            UiManager.instance.logo.LoginAction();
+            UiManager.Instance.logo.LoginAction();
     }
 
     public void Login(bool _login = false)

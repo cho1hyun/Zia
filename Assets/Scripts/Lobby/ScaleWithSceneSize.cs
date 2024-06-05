@@ -1,9 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public class ScaleWithSceneSize : MonoBehaviour
 {
+    public RectTransform Top;
+    public RectTransform Middle;
+    public RectTransform Bottom;
+
+    float up;
+    float down;
+    float left;
+    float right;
+
+    void Start()
+    {
+        up = Top.rect.height;
+        down = Bottom.rect.height;
+        left = Middle.offsetMin.x ;
+        right = -Middle.offsetMax.x;
+    }
+
     void Update()
     {
         SetSize();
@@ -18,6 +36,11 @@ public class ScaleWithSceneSize : MonoBehaviour
         {
             GetComponent<RectTransform>().offsetMin = new Vector2(0, 0);
             GetComponent<RectTransform>().offsetMax = new Vector2(0, 0);
+
+            Top.sizeDelta = new Vector2(0, up);
+            Middle.offsetMin = new Vector2(left, -up);
+            Middle.offsetMax = new Vector2(-right, down);
+            Bottom.sizeDelta = new Vector2(0, down);
         }
         else if (height > width)
         {

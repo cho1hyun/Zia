@@ -63,11 +63,11 @@ public class Setting : MonoBehaviour
 
                 if (i == 0)
                 {
-                    UiManager.instance.menuKey = KeyCode.None;
+                    UiManager.Instance.menuKey = KeyCode.None;
                 }
                 else
                 {
-                    UiManager.instance.keys[i - 1] = KeyCode.None;
+                    UiManager.Instance.keys[i - 1] = KeyCode.None;
                 }
             }
             else
@@ -91,26 +91,26 @@ public class Setting : MonoBehaviour
 
     public void Controll(int mode)
     {
-        UiManager.instance.mode = (Mode)mode;
+        UiManager.Instance.mode = (Mode)mode;
 
         for (int i = 0; i < ModePc.Count; i++)
         {
-            ModePc[i].SetActive(UiManager.instance.mode == Mode.PC);
+            ModePc[i].SetActive(UiManager.Instance.mode == Mode.PC);
         }
 
         for (int i = 0; i < ModeMobile.Count; i++)
         {
-            ModeMobile[i].SetActive(UiManager.instance.mode == Mode.Mobile);
+            ModeMobile[i].SetActive(UiManager.Instance.mode == Mode.Mobile);
         }
 
         for (int i = 0; i < Ingame.Instance.ModePc.Count; i++)
         {
-            Ingame.Instance.ModePc[i].SetActive(UiManager.instance.mode == Mode.PC);
+            Ingame.Instance.ModePc[i].SetActive(UiManager.Instance.mode == Mode.PC);
         }
 
         for (int i = 0; i < Ingame.Instance.ModeMobile.Count; i++)
         {
-            Ingame.Instance.ModeMobile[i].SetActive(UiManager.instance.mode == Mode.Mobile);
+            Ingame.Instance.ModeMobile[i].SetActive(UiManager.Instance.mode == Mode.Mobile);
         }
 
         ShowKeyObj(ShowKey);
@@ -135,17 +135,17 @@ public class Setting : MonoBehaviour
 
         for (int i = 0; i < Ingame.Instance.Key.Count; i++)
         {
-            Ingame.Instance.Key[i].SetActive(Show && UiManager.instance.mode == Mode.PC);
+            Ingame.Instance.Key[i].SetActive(Show && UiManager.Instance.mode == Mode.PC);
         }
 
         for (int i = 0; i < Ingame.Instance.SkillGroup.childCount; i++)
         {
-            Ingame.Instance.SkillGroup.GetChild(i).GetComponent<Skill>().keyObj.SetActive(Show && UiManager.instance.mode == Mode.PC);
+            Ingame.Instance.SkillGroup.GetChild(i).GetComponent<Skill>().keyObj.SetActive(Show && UiManager.Instance.mode == Mode.PC);
         }
 
         for (int i = 0; i < Ingame.Instance.Skills.childCount; i++)
         {
-            Ingame.Instance.Skills.GetChild(i).GetComponent<Skill>().keyObj.SetActive(Show && UiManager.instance.mode == Mode.PC);
+            Ingame.Instance.Skills.GetChild(i).GetComponent<Skill>().keyObj.SetActive(Show && UiManager.Instance.mode == Mode.PC);
         }
     }
 

@@ -13,8 +13,8 @@ public class SetTheKey : MonoBehaviour
 
     public void Select()
     {
-        UiManager.instance.setting.nowKeySet = GetComponent<TMP_InputField>();
+        UiManager.Instance.setting.nowKeySet = GetComponent<TMP_InputField>();
 
-        UiManager.instance.setting.SetKey(GetComponent<TMP_InputField>().text);
+        UiManager.Instance.setting.SetKey(GetComponent<TMP_InputField>().text);
     }
 }

@@ -21,7 +21,7 @@ public class Skill : MonoBehaviour
 
     public void Update()
     {
-        if (UiManager.instance.mode == Mode.PC && !UiManager.instance.setting.gameObject.activeSelf && Input.GetKey(key) && delay <= 0f)
+        if (UiManager.Instance.mode == Mode.PC && !UiManager.Instance.setting.gameObject.activeSelf && Input.GetKey(key) && delay <= 0f)
         {
             UseSkill();
 
