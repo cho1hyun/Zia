@@ -73,6 +73,16 @@ public class GamaManager : MonoBehaviour
         {
             case 0:
                 return LocalizeTextTable.address;
+            case 1:
+                return ScenarioTable.address;
+            case 2:
+                return ScenarioTextTable.address;
+            case 3:
+                return NoticeTable.address;
+            case 4:
+                return GoodsTable.address;
+            case 5:
+                return EquipTable.address;
             default:
                 return string.Empty;
         }
@@ -84,6 +94,16 @@ public class GamaManager : MonoBehaviour
         {
             case 0:
                 return LocalizeTextTable.sheet;
+            case 1:
+                return ScenarioTable.sheet;
+            case 2:
+                return ScenarioTextTable.sheet;
+            case 3:
+                return NoticeTable.sheet;
+            case 4:
+                return GoodsTable.sheet;
+            case 5:
+                return EquipTable.sheet;
             default:
                 return 0;
         }

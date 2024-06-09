@@ -17,7 +17,7 @@ public class TableManager
     public static event OnInitializedTable OnInitializedTableEvent;
     public bool IsInitialized = false;
 
-    private const int _MAXDATA = 1;   //Å×ÀÌºí ÃÑ °¹¼ö
+    private const int _MAXDATA = 6;   //Å×ÀÌºí ÃÑ °¹¼ö
 
     List<Dictionary<string, object>> data;
 
@@ -31,6 +31,26 @@ public class TableManager
         if (n == 0)
         {
             LocalizeTextData = new LocalizeTextTable_Parser().Parse();
+        }
+        else if (n == 1)
+        {
+            ScenarioData = new ScenarioTable_Parser().Parse();
+        }
+        else if (n == 2)
+        {
+            ScenarioTextData = new ScenarioTextTable_Parser().Parse();
+        }
+        else if (n == 3)
+        {
+            NoticeData = new NoticeTable_Parser().Parse();
+        }
+        else if (n == 4)
+        {
+            GoodsData = new GoodsTable_Parser().Parse();
+        }
+        else if (n == 5)
+        {
+            EquipData = new EquipTable_Parser().Parse();
         }
         else if (n == getMaxData())
         {
@@ -50,6 +70,11 @@ public class TableManager
     }
 
     Dictionary<int, LocalizeTextTable> LocalizeTextData;
+    Dictionary<string, ScenarioTable> ScenarioData;
+    Dictionary<int, ScenarioTextTable> ScenarioTextData;
+    Dictionary<int, NoticeTable> NoticeData;
+    Dictionary<int, GoodsTable> GoodsData;
+    Dictionary<int, EquipTable> EquipData;
 
     public string GetLocalizeText(int id)
     {
@@ -66,5 +91,53 @@ public class TableManager
             default:
                 return string.Empty;
         }
+    }
+
+    public ScenarioTable GetScenario(string id)
+    {
+        return ScenarioData[id];
+    }
+
+    public string GetScenarioText(int id)
+    {
+        switch (GamaManager.Instance.language)
+        {
+            case Language.None:
+                return ScenarioTextData[id].id.ToString();
+            case Language.KOR:
+                return ScenarioTextData[id].kor;
+            case Language.ENG:
+                return ScenarioTextData[id].eng;
+            case Language.JAP:
+                return ScenarioTextData[id].jap;
+            default:
+                return string.Empty;
+        }
+    }
+
+    public NoticeTable GetNotice(int id)
+    {
+        return NoticeData[id];
+    }
+
+    public List<NoticeTable> GetNoticeAll()
+    {
+        List<NoticeTable> noticeList = new List<NoticeTable>();
+
+        foreach (var item in NoticeData)
+        {
+            noticeList.Add(item.Value);
+        }
+        return noticeList;
+    }
+
+    public GoodsTable GetGoods(int id)
+    {
+        return GoodsData[id];
+    }
+
+    public EquipTable GetEquip(int id)
+    {
+        return EquipData[id];
     }
 }

@@ -8,14 +8,9 @@ public class Pade : MonoBehaviour
 
     public void PadeOnAction()
     {
-        switch (count)
+        for (int i = 0; i < UiManager.Instance.transform.childCount; i++)
         {
-            case 0:
-                UiManager.Instance.transform.GetChild(0).gameObject.SetActive(false);
-                UiManager.Instance.transform.GetChild(2).gameObject.SetActive(true);
-                break;
-            default:
-                break;
+            UiManager.Instance.transform.GetChild(i).gameObject.SetActive(i == count);
         }
     }
 

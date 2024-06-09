@@ -32,14 +32,14 @@ public class Logo : MonoBehaviour
                 txt += ".";
             }
 
-            text.text = string.Format(TableManager.Instance.GetLocalizeText(21), txt);
+            text.text = string.Format(TableManager.Instance.GetLocalizeText(16), txt);
 
             time += 1;
             yield return new WaitForSeconds(0.1f);
         }
 
         txt = "{0}/{1}";
-        text.text = string.Format(TableManager.Instance.GetLocalizeText(22), string.Format(txt,0, TableManager.Instance.getMaxData()));
+        text.text = string.Format(TableManager.Instance.GetLocalizeText(17), string.Format(txt, 0, TableManager.Instance.getMaxData()));
         yield return null;
 
         for (int i = 1; i <= TableManager.Instance.getMaxData(); i++)
@@ -52,14 +52,16 @@ public class Logo : MonoBehaviour
 
             if (i < TableManager.Instance.getMaxData())
             {
-                text.text = string.Format(TableManager.Instance.GetLocalizeText(22), string.Format(txt, 0, TableManager.Instance.getMaxData()));
+                text.text = string.Format(TableManager.Instance.GetLocalizeText(17), string.Format(txt, i, TableManager.Instance.getMaxData()));
             }
             else
             {
-                text.text = string.Format(TableManager.Instance.GetLocalizeText(22), string.Format(txt, TableManager.Instance.getMaxData(), TableManager.Instance.getMaxData()));
+                text.text = string.Format(TableManager.Instance.GetLocalizeText(17), string.Format(txt, TableManager.Instance.getMaxData(), TableManager.Instance.getMaxData()));
             }
             yield return null;
         }
+
+        yield return new WaitForSeconds(0.1f);
 
         text.gameObject.SetActive(false);
         LoginButton.SetActive(true);
@@ -81,7 +83,7 @@ public class Logo : MonoBehaviour
         LoginButton.SetActive(false);
 
         text.gameObject.SetActive(true);
-        text.text = string.Format(TableManager.Instance.GetLocalizeText(31));
+        text.text = string.Format(TableManager.Instance.GetLocalizeText(26));
 
         for (int i = 0; i < obj.Count; i++)
         {

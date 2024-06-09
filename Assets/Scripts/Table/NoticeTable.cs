@@ -38,7 +38,7 @@ public class NoticeTable_Parser
             tableData.name = int.TryParse(data[i][nameof(tableData.name)].ToString(), out int name) ? name : 0;
             tableData.desc = int.TryParse(data[i][nameof(tableData.desc)].ToString(), out int desc) ? desc : 0;
             tableData.img = (string)data[i][nameof(tableData.img)];
-            //tableData.type = Enum.TryParse(enumType: typeof NoticeType,);
+            tableData.type = Enum.TryParse(data[i][nameof(tableData.type)].ToString(), out NoticeType type) ? type : NoticeType.None;
             tableData.link = (string)data[i][nameof(tableData.link)];
 
             if (!dic.ContainsKey(tableData.id))
