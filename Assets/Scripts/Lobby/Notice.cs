@@ -35,7 +35,8 @@ public class Notice : MonoBehaviour
             case NoticeType.None:
                 break;
             case NoticeType.Link:
-                Application.ExternalEval("window.open(\"" + noticeList[nowNotice].link + "\")");
+                //Application.ExternalEval("window.open(\"" + noticeList[nowNotice].link + "\")");
+                Application.OpenURL(noticeList[nowNotice].link);
                 break;
             case NoticeType.Shop:
                 break;
