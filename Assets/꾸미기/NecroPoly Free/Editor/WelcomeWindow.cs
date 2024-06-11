@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class WelcomeWindow : EditorWindow
 {
-    private GUIStyle textureButton;
+    /*private GUIStyle textureButton;
     private GUIStyle headingText;
     private GUIStyle commonText;
 
@@ -124,5 +124,5 @@ GUILayout.Space(10f);
         GUILayout.EndVertical();
 
         GUILayout.EndHorizontal();
-    }
+    }*/
 }

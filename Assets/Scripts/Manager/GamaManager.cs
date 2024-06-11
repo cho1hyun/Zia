@@ -26,10 +26,22 @@ public class GamaManager : MonoBehaviour
 
     public LoadingTableResult LoadResult { get; private set; }
 
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void Start()
     {
-        Instance = this;
-
         StartCoroutine(TextLoad());
     }
 
