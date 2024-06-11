@@ -13,10 +13,12 @@ public class Notice : MonoBehaviour
     public Image noticeImg;
     public TMP_Text noticeStr;
 
-    public int nowNotice;
-
     public GameObject NoticeBtn;
     public Transform NoticeBtnPar;
+
+    public Transform ScrollViewGroup;
+
+    public int nowNotice;
 
     void OnEnable()
     {
@@ -35,7 +37,6 @@ public class Notice : MonoBehaviour
             case NoticeType.None:
                 break;
             case NoticeType.Link:
-                //Application.ExternalEval("window.open(\"" + noticeList[nowNotice].link + "\")");
                 Application.OpenURL(noticeList[nowNotice].link);
                 break;
             case NoticeType.Shop:
@@ -48,6 +49,8 @@ public class Notice : MonoBehaviour
     void Set(int n)
     {
         nowNotice = n;
+
+        noticeImg.transform.parent.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
 
         noticeStr.text = TableManager.Instance.GetLocalizeText(noticeList[n].desc);
 
@@ -78,6 +81,8 @@ public class Notice : MonoBehaviour
 
             Set(0);
         }
+
+        ScrollViewGroup.GetChild(1).GetChild(0).GetComponent<RectTransform>().offsetMax = new Vector2(3 * (ScrollViewGroup.GetChild(1).GetComponent<RectTransform>().rect.width + ScrollViewGroup.GetComponent<HorizontalLayoutGroup>().spacing), 0);
     }
 
     IEnumerator SpriteLoad()
