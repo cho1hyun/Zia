@@ -38,6 +38,7 @@ public class Setting : MonoBehaviour
     public void SetSetting(bool active)
     {
         SettingUI.SetActive(active);
+        ShowSettong(active && transform.parent.GetChild(1).gameObject.activeSelf && !transform.parent.GetChild(2).gameObject.activeSelf);
     }
 
     public void ShowUI(int active)
