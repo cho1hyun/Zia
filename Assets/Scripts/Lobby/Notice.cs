@@ -69,6 +69,7 @@ public class Notice : MonoBehaviour
 
         if (NoticeBtnPar.childCount <= 0)
         {
+            GetComponent<CanvasGroup>().alpha = 0.0f;
             for (int i = 0; i < noticeList.Count; i++)
             {
                 Button button = Instantiate(NoticeBtn, NoticeBtnPar).GetComponent<Button>();
@@ -106,5 +107,7 @@ public class Notice : MonoBehaviour
             noticeImg.sprite = sprite;
         }
         noticeImg.GetComponent<RectTransform>().sizeDelta = new Vector2(noticeImg.GetComponent<RectTransform>().sizeDelta.x, noticeImg.GetComponent<RectTransform>().sizeDelta.x / noticeImg.sprite.bounds.size.x * noticeImg.sprite.bounds.size.y);
+
+        GetComponent<CanvasGroup>().alpha = 1.0f;
     }
 }
