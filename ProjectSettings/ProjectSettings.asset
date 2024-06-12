@@ -15,7 +15,7 @@ PlayerSettings:
   companyName: 214
   productName: Zia
   defaultCursor: {fileID: 0}
-  cursorHotspot: {x: 960, y: 540}
+  cursorHotspot: {x: 1920, y: 1080}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
   m_ShowUnitySplashScreen: 1
   m_ShowUnitySplashLogo: 1
