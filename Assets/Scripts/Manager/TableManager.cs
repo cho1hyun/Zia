@@ -17,7 +17,7 @@ public class TableManager
     public static event OnInitializedTable OnInitializedTableEvent;
     public bool IsInitialized = false;
 
-    private const int _MAXDATA = 6;   //Å×ÀÌºí ÃÑ °¹¼ö
+    private const int _MAXDATA = 8;   //Å×ÀÌºí ÃÑ °¹¼ö
 
     List<Dictionary<string, object>> data;
 
@@ -52,6 +52,14 @@ public class TableManager
         {
             EquipData = new EquipTable_Parser().Parse();
         }
+        else if (n == 6)
+        {
+            CharacterData = new CharacterTable_Parser().Parse();
+        }
+        else if (n == 7)
+        {
+            CharacterSkillData = new CharacterSkillTable_Parser().Parse();
+        }
         else if (n == getMaxData())
         {
             IsInitialized = true;
@@ -75,6 +83,8 @@ public class TableManager
     Dictionary<int, NoticeTable> NoticeData;
     Dictionary<int, GoodsTable> GoodsData;
     Dictionary<int, EquipTable> EquipData;
+    Dictionary<int, CharacterTable> CharacterData;
+    Dictionary<int, CharacterSkillTable> CharacterSkillData;
 
     public string GetLocalizeText(int id)
     {
@@ -139,5 +149,33 @@ public class TableManager
     public EquipTable GetEquip(int id)
     {
         return EquipData[id];
+    }
+
+    public CharacterTable GetCharacter(int id)
+    {
+        return CharacterData[id];
+    }
+
+    public CharacterSkillTable GetCharacterSkillSet(int id)
+    {
+        return CharacterSkillData[id];
+    }
+
+    public SkillSet GetCharacterSkill(int id, int skillid)
+    {
+        return CharacterSkillData[id].skillSet[skillid];
+    }
+
+    public SkillSet GetCharacterSkill(int id, SkillType type)
+    {
+        foreach (var item in CharacterSkillData[id].skillSet)
+        {
+            if (item.Value.type == type)
+            {
+                return item.Value;
+            }
+        }
+
+        return null;
     }
 }
