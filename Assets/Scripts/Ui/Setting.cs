@@ -104,9 +104,6 @@ public class Setting : MonoBehaviour
             ModeMobile[i].SetActive(UiManager.Instance.mode == Mode.Mobile);
         }
 
-        if (Ingame.Instance == null)
-            return;
-
         for (int i = 0; i < Ingame.Instance.ModePc.Count; i++)
         {
             Ingame.Instance.ModePc[i].SetActive(UiManager.Instance.mode == Mode.PC);
@@ -137,9 +134,6 @@ public class Setting : MonoBehaviour
     {
         ShowKey = Show;
 
-        if (Ingame.Instance == null)
-            return;
-
         for (int i = 0; i < Ingame.Instance.Key.Count; i++)
         {
             Ingame.Instance.Key[i].SetActive(Show && UiManager.Instance.mode == Mode.PC);
@@ -158,9 +152,6 @@ public class Setting : MonoBehaviour
 
     public TMP_Text SetKey(string key)
     {
-        if (Ingame.Instance == null)
-            return null;
-
         for (int i = 0; i < Ingame.Instance.Key.Count; i++)
         {
             if (Ingame.Instance.Key[i].GetComponent<TMP_Text>() != null && Ingame.Instance.Key[i].GetComponent<TMP_Text>().text == key)
