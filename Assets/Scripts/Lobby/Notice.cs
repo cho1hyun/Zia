@@ -59,7 +59,7 @@ public class Notice : MonoBehaviour
         for (int i = 0; i < NoticeBtnPar.childCount; i++)
         {
             NoticeBtnPar.GetChild(i).transform.GetChild(0).GetComponent<Image>().color = i == n ? Color.white : Color.black;
-            NoticeBtnPar.GetChild(i).transform.GetChild(1).GetComponent<TMP_Text>().color = i == n ? Color.white : Color.black;
+            NoticeBtnPar.GetChild(i).transform.GetChild(1).GetComponent<TMP_Text>().color = i == n ? Color.black : Color.white;
         }
     }
 
