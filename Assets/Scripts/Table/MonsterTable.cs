@@ -67,3 +67,4 @@ public class MonsterTable_Parser
 
         return dic;
     }
+}
