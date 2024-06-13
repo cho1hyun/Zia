@@ -1,6 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using TMPro;
 using UnityEngine;
 
 public class UiManager : MonoBehaviour
@@ -12,6 +11,9 @@ public class UiManager : MonoBehaviour
     public Logo logo;
 
     public Setting setting;
+
+    public GameObject toast;
+    public TMP_Text toastMessage;
 
     public bool load;
 
@@ -33,14 +35,9 @@ public class UiManager : MonoBehaviour
     {
         if (InPutTrue())
         {
-            if (setting.SettingUI.activeSelf)
-            {
-                setting.SettingUI.SetActive(false);
-            }
-            else
-            {
-                setting.gameObject.SetActive(setting.gameObject.activeSelf ? false : true);
-            }
+            setting.SettingUI.SetActive(!setting.gameObject.activeSelf && transform.GetChild(1).gameObject.activeSelf && !transform.GetChild(2).gameObject.activeSelf);
+            setting.ShowSettong(!setting.gameObject.activeSelf);
+
         }
     }
 
@@ -77,5 +74,11 @@ public class UiManager : MonoBehaviour
     {
         pade.gameObject.SetActive(true);
         pade.count = count;
+    }
+
+    public void ShowToast(int message = 0)
+    {
+        toast.SetActive(true);
+        toastMessage.text = string.Format(TableManager.Instance.GetLocalizeText(message));
     }
 }

@@ -86,21 +86,4 @@ public class CharacterTable_Parser
 
         return dic;
     }
-
-    string _Class(string option)
-    {
-        switch (option)
-        {
-            case "0":
-                return "Zero";
-            case "1":
-                return "One";
-            case "2":
-                return "Two";
-            case "3":
-                return "Three";
-            default:
-                return "None";
-        }
-    }
 }

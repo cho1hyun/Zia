@@ -10,12 +10,24 @@ public class Pade : MonoBehaviour
     {
         for (int i = 0; i < UiManager.Instance.transform.childCount; i++)
         {
-            UiManager.Instance.transform.GetChild(i).gameObject.SetActive(i == count);
+            if (UiManager.Instance.transform.GetChild(i) != transform)
+            {
+                UiManager.Instance.transform.GetChild(i).gameObject.SetActive(i == count);
+            }
+        }
+        if (count != 1)
+        {
+            PadeOff();
         }
     }
 
     public void PadeOffAction()
     {
         gameObject.SetActive(false);
+    }
+
+    public void PadeOff()
+    {
+        GetComponent<Animator>().SetTrigger("Pade");
     }
 }

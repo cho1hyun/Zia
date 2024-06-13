@@ -20,6 +20,8 @@ public class Notice : MonoBehaviour
 
     public int nowNotice;
 
+    List<Sprite> sprites;
+
     void OnEnable()
     {
         CreateNotice();
@@ -54,7 +56,10 @@ public class Notice : MonoBehaviour
 
         noticeStr.text = TableManager.Instance.GetLocalizeText(noticeList[n].desc);
 
-        StartCoroutine(SpriteLoad());
+        noticeImg.sprite = sprites[n];
+
+        noticeImg.GetComponent<RectTransform>().sizeDelta = new Vector2(noticeImg.GetComponent<RectTransform>().sizeDelta.x, noticeImg.GetComponent<RectTransform>().sizeDelta.x / noticeImg.sprite.bounds.size.x * noticeImg.sprite.bounds.size.y);
+
 
         for (int i = 0; i < NoticeBtnPar.childCount; i++)
         {
@@ -69,7 +74,6 @@ public class Notice : MonoBehaviour
 
         if (NoticeBtnPar.childCount <= 0)
         {
-            GetComponent<CanvasGroup>().alpha = 0.0f;
             for (int i = 0; i < noticeList.Count; i++)
             {
                 Button button = Instantiate(NoticeBtn, NoticeBtnPar).GetComponent<Button>();
@@ -80,7 +84,7 @@ public class Notice : MonoBehaviour
                 button.onClick.AddListener(delegate { Set(index); });
             }
 
-            Set(0);
+            StartCoroutine(SpriteLoad());
         }
 
         ScrollViewGroup.GetChild(1).GetChild(0).GetComponent<RectTransform>().offsetMax = new Vector2(3 * (ScrollViewGroup.GetChild(1).GetComponent<RectTransform>().rect.width + ScrollViewGroup.GetComponent<HorizontalLayoutGroup>().spacing), 0);
@@ -88,26 +92,31 @@ public class Notice : MonoBehaviour
 
     IEnumerator SpriteLoad()
     {
-        if (!noticeList[nowNotice].img.Contains("."))
+        sprites = new List<Sprite>();
+
+        for (int i = 0; i < noticeList.Count; i++)
         {
-            SpriteAtlas spriteAtlas = Resources.Load<SpriteAtlas>("Atlas/Notice");
+            if (!noticeList[i].img.Contains("."))
+            {
+                SpriteAtlas spriteAtlas = Resources.Load<SpriteAtlas>("Atlas/Notice");
 
-            noticeImg.sprite = spriteAtlas.GetSprite(noticeList[nowNotice].img);
+                sprites.Add(spriteAtlas.GetSprite(noticeList[i].img));
+            }
+            else
+            {
+                UnityWebRequest www = UnityWebRequestTexture.GetTexture(noticeList[i].img);
+
+                yield return www.SendWebRequest();
+
+                Texture2D texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
+
+                Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+
+                sprites.Add(sprite);
+            }
         }
-        else
-        {
-            UnityWebRequest www = UnityWebRequestTexture.GetTexture(noticeList[nowNotice].img);
+        Set(0);
 
-            yield return www.SendWebRequest();
-
-            Texture2D texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
-
-            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-
-            noticeImg.sprite = sprite;
-        }
-        noticeImg.GetComponent<RectTransform>().sizeDelta = new Vector2(noticeImg.GetComponent<RectTransform>().sizeDelta.x, noticeImg.GetComponent<RectTransform>().sizeDelta.x / noticeImg.sprite.bounds.size.x * noticeImg.sprite.bounds.size.y);
-
-        GetComponent<CanvasGroup>().alpha = 1.0f;
+        UiManager.Instance.pade.PadeOff();
     }
 }

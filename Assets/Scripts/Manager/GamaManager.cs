@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public enum LoadingTableResult
@@ -18,9 +16,9 @@ public enum Mode
     Mobile = 2,
 }
 
-public class GamaManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    public static GamaManager Instance;
+    public static GameManager Instance;
 
     public Language language;
 
@@ -95,6 +93,10 @@ public class GamaManager : MonoBehaviour
                 return GoodsTable.address;
             case 5:
                 return EquipTable.address;
+            case 6:
+                return CharacterTable.address;
+            case 7:
+                return CharacterSkillTable.address;
             default:
                 return string.Empty;
         }
@@ -116,6 +118,10 @@ public class GamaManager : MonoBehaviour
                 return GoodsTable.sheet;
             case 5:
                 return EquipTable.sheet;
+            case 6:
+                return CharacterTable.sheet;
+            case 7:
+                return CharacterSkillTable.sheet;
             default:
                 return 0;
         }
