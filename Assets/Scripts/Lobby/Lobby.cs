@@ -14,14 +14,24 @@ public class Lobby : MonoBehaviour
 
     void OnEnable()
     {
-        if (openCount == 0)
+        if (openCount == 0 && GameManager.Instance.load)
         {
             Notice.gameObject.SetActive(true);
             openCount++;
         }
         else
         {
-            UiManager.Instance.pade.PadeOff();
+            StartCoroutine(GameManagerWait());
         }
+    }
+
+    IEnumerator GameManagerWait()
+    {
+        while (UiManager.Instance == null)
+        {
+            yield return null;
+        }
+
+        UiManager.Instance.pade.PadeOff();
     }
 }

@@ -64,6 +64,15 @@ public enum Range_
     Four = 4,
 }
 
+public enum EquipSlot
+{
+    None,
+    leftHand,
+    rightHand,
+    twoHand,
+    bothHand,
+}
+
 public class EquipTable
 {
     public static string address = "https://docs.google.com/spreadsheets/d/1hiYAEjQ_zRCI0jAD2v7oqjBMEdfEC81KkVMZawhieXc";
@@ -85,9 +94,13 @@ public class EquipTable
     public float optionPer2;
     public float speed;
     public Range_ range;
+    public EquipSlot equipSlot;
     public string model;
     public Vector3 size;
-    public Vector3 pos;
+    public Vector3 leftRot;
+    public Vector3 rigthRot;
+    public Vector3 leftPos;
+    public Vector3 rightPos;
 }
 
 public class EquipTable_Parser
@@ -119,7 +132,10 @@ public class EquipTable_Parser
             tableData.range = int.TryParse(data[i][nameof(tableData.range)].ToString(), out int range) ? (Range_)range : (Range_)(-1);
             tableData.model = (string)data[i][nameof(tableData.model)];
             tableData.size = new Vector3(float.TryParse(data[i]["sizeX"].ToString(), out float sizeX) ? sizeX : 0, float.TryParse(data[i]["sizeY"].ToString(), out float sizeY) ? sizeY : 0, float.TryParse(data[i]["sizeZ"].ToString(), out float sizeZ) ? sizeZ : 0);
-            tableData.pos = new Vector3(float.TryParse(data[i]["posX"].ToString(), out float posX) ? posX : 0, float.TryParse(data[i]["posY"].ToString(), out float posY) ? posY : 0, float.TryParse(data[i]["posZ"].ToString(), out float posZ) ? posZ : 0);
+            tableData.leftRot = new Vector3(float.TryParse(data[i]["leftRotX"].ToString(), out float leftRotX) ? leftRotX : 0, float.TryParse(data[i]["leftRotY"].ToString(), out float leftRotY) ? leftRotY : 0, float.TryParse(data[i]["leftRotZ"].ToString(), out float leftRotZ) ? leftRotZ : 0);
+            tableData.rigthRot = new Vector3(float.TryParse(data[i]["rightRotX"].ToString(), out float rightRotX) ? rightRotX : 0, float.TryParse(data[i]["rightRotY"].ToString(), out float rightRotY) ? rightRotY : 0, float.TryParse(data[i]["rightRotZ"].ToString(), out float rightRotZ) ? rightRotZ : 0);
+            tableData.leftPos = new Vector3(float.TryParse(data[i]["leftPosX"].ToString(), out float leftPosX) ? leftPosX : 0, float.TryParse(data[i]["leftPosY"].ToString(), out float leftPosY) ? leftRotY : 0, float.TryParse(data[i]["leftPosZ"].ToString(), out float leftPosZ) ? leftPosZ : 0);
+            tableData.rightPos = new Vector3(float.TryParse(data[i]["rightPosX"].ToString(), out float rightPosX) ? rightPosX : 0, float.TryParse(data[i]["rightPosY"].ToString(), out float rightPosY) ? rightPosY : 0, float.TryParse(data[i]["rightPosZ"].ToString(), out float rightPosZ) ? rightPosZ : 0);
 
             if (!dic.ContainsKey(tableData.id))
                 dic.Add(tableData.id, tableData);
