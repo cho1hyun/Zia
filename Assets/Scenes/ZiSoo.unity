@@ -8970,7 +8970,7 @@ GameObject:
   - component: {fileID: 346817012}
   - component: {fileID: 346817011}
   m_Layer: 0
-  m_Name: monster
+  m_Name: Character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13076,7 +13076,7 @@ GameObject:
   - component: {fileID: 515025478}
   - component: {fileID: 515025477}
   m_Layer: 0
-  m_Name: CharacterModel_0000
+  m_Name: Character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39743,7 +39743,7 @@ GameObject:
   - component: {fileID: 1630551035}
   - component: {fileID: 1630551034}
   m_Layer: 0
-  m_Name: CharacterModel_0002
+  m_Name: Character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41804,7 +41804,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1684924382
 Transform:
   m_ObjectHideFlags: 0

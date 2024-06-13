@@ -43,8 +43,8 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
 
             if (load)
-                for (int i = 0; i < transform.childCount; i++)
-                    transform.GetChild(i).gameObject.SetActive(i == 0);
+                for (int i = 0; i < transform.GetChild(0).childCount; i++)
+                    transform.GetChild(0).GetChild(i).gameObject.SetActive(i == 0);
         }
         else
         {

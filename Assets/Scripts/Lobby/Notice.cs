@@ -52,7 +52,7 @@ public class Notice : MonoBehaviour
     {
         nowNotice = n;
 
-        noticeImg.transform.parent.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+        ScrollViewGroup.GetChild(1).GetChild(0).GetComponent<ScrollRect>().normalizedPosition = new Vector2(0, 1);
 
         noticeStr.text = TableManager.Instance.GetLocalizeText(noticeList[n].desc);
 
@@ -72,7 +72,7 @@ public class Notice : MonoBehaviour
     {
         noticeList = TableManager.Instance.GetNoticeAll();
 
-        if (NoticeBtnPar.childCount <= 0)
+        if (NoticeBtnPar.childCount <= 0 && TableManager.Instance.GetNoticeAll() != null)
         {
             for (int i = 0; i < noticeList.Count; i++)
             {

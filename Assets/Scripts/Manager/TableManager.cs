@@ -88,7 +88,7 @@ public class TableManager
 
     public string GetLocalizeText(int id)
     {
-        if (id == 0)
+        if (id == 0 || LocalizeTextData == null)
             return string.Empty;
 
         switch (GameManager.Instance.language)
@@ -108,11 +108,17 @@ public class TableManager
 
     public ScenarioTable GetScenario(string id)
     {
+        if (!IsInitialized)
+            return null;
+
         return ScenarioData[id];
     }
 
     public string GetScenarioText(int id)
     {
+        if (!IsInitialized)
+            return string.Empty;
+
         switch (GameManager.Instance.language)
         {
             case Language.None:
@@ -130,11 +136,17 @@ public class TableManager
 
     public NoticeTable GetNotice(int id)
     {
+        if (!IsInitialized)
+            return null;
+
         return NoticeData[id];
     }
 
     public List<NoticeTable> GetNoticeAll()
     {
+        if (!IsInitialized)
+            return null;
+
         List<NoticeTable> noticeList = new List<NoticeTable>();
 
         foreach (var item in NoticeData)
@@ -146,31 +158,49 @@ public class TableManager
 
     public GoodsTable GetGoods(int id)
     {
+        if (!IsInitialized)
+            return null;
+
         return GoodsData[id];
     }
 
     public EquipTable GetEquip(int id)
     {
+        if (!IsInitialized)
+            return null;
+
         return EquipData[id];
     }
 
     public CharacterTable GetCharacter(int id)
     {
+        if (!IsInitialized)
+            return null;
+
         return CharacterData[id];
     }
 
     public CharacterSkillTable GetCharacterSkillSet(int id)
     {
+        if (!IsInitialized)
+            return null;
+
         return CharacterSkillData[id];
     }
 
     public SkillSet GetCharacterSkill(int id, int skillid)
     {
+        if (!IsInitialized)
+            return null;
+
         return CharacterSkillData[id].skillSet[skillid];
     }
 
     public SkillSet GetCharacterSkill(int id, SkillType type)
     {
+        if (!IsInitialized)
+            return null;
+
         foreach (var item in CharacterSkillData[id].skillSet)
         {
             if (item.Value.type == type)
