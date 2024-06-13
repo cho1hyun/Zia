@@ -425,6 +425,8 @@ MonoBehaviour:
   pade: {fileID: 0}
   logo: {fileID: 0}
   setting: {fileID: 0}
+  toast: {fileID: 0}
+  toastMessage: {fileID: 0}
   load: 1
   mode: 1
   menuKey: 27
