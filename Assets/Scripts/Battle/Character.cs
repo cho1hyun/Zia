@@ -4,14 +4,25 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
+    public static Character Instance;
+
     public float speed;
     public float rotateSpeed;
+
+    public List<Transform> Characters;
+
+    Animator Main;
 
     KeyCode a, b, c, d;
 
     float x;
     float z;
     bool back;
+
+    void Awake()
+    {
+        StartCoroutine(GameManagerWait());
+    }
 
     void Update()
     {
@@ -26,37 +37,36 @@ public class Character : MonoBehaviour
 
     Vector3 GetKeyInput()
     {
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            x = 1;
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            x = -1;
-        }
-
-        if ((x > 0 && Input.GetKeyUp(KeyCode.RightArrow)) || x < 0 && Input.GetKeyUp(KeyCode.LeftArrow))
-        {
-            x = 0;
-        }
-
-
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(a))
         {
             z = 1;
             back = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetKeyDown(b))
         {
             z = -1;
             back = true;
         }
 
-        if ((z > 0 && Input.GetKeyUp(KeyCode.UpArrow)) || z < 0 && Input.GetKeyUp(KeyCode.DownArrow))
+        if ((z > 0 && Input.GetKeyUp(a)) || (z < 0 && Input.GetKeyUp(b))) 
         {
             z = 0;
+        }
+
+        if (Input.GetKeyDown(c))
+        {
+            x = -1;
+        }
+
+        if (Input.GetKeyDown(d))
+        {
+            x = 1;
+        }
+
+        if ((x < 0 && Input.GetKeyUp(c)) || (x > 0 && Input.GetKeyUp(d)))
+        {
+            x = 0;
         }
 
         return new Vector3(x, 0, z);
@@ -64,9 +74,48 @@ public class Character : MonoBehaviour
 
     void AnimMove(bool isMove)
     {
-        for (int i = 0; i < transform.GetChild(0).childCount; i++)
+        for (int i = 0; i < Characters.Count; i++)
         {
-            transform.GetChild(0).GetChild(i).GetChild(0).GetComponent<Animator>().SetBool("Move", isMove);
+            Characters[i].GetChild(0).GetComponent<Animator>().SetBool("Move", isMove);
+        }
+    }
+
+    public void switchCharacter(int n = 1)
+    {
+        Vector3 pos = Characters[0].localPosition;
+        Characters[0].localPosition = Characters[n].localPosition;
+        Characters[n].localPosition = pos;
+
+        Transform transform = Characters[0];
+        Characters[0] = Characters[n];
+        Characters[n] = transform;
+
+        Main = Characters[0].GetChild(0).GetComponent<Animator>();
+    }
+
+    IEnumerator GameManagerWait()
+    {
+        Instance = this;
+        Main = Characters[0].GetChild(0).GetComponent<Animator>();
+
+        a = KeyCode.UpArrow;
+        b = KeyCode.DownArrow;
+        c = KeyCode.LeftArrow;
+        d = KeyCode.RightArrow;
+
+        float time = 0.0f;
+        while (GameManager.Instance == null && time < 10.0f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        if (time < 10.0f)
+        {
+            a = GameManager.Instance.keys[0];
+            b = GameManager.Instance.keys[1];
+            c = GameManager.Instance.keys[2];
+            d = GameManager.Instance.keys[3];
         }
     }
 }
