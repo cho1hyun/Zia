@@ -52,6 +52,44 @@ public class Skill : MonoBehaviour
             StartCoroutine(CoolTimeRun());
 
             UiManager.Instance.ingame.Boss.GetDamage(damage, hitCount);
+
+
+            for (int i = 0; i < GameManager.Instance.keys.Count; i++)
+            {
+                if (key == GameManager.Instance.keys[i])
+                {
+                    switch (i)
+                    {
+                        case 4:
+                            Character.Instance.Main.SetTrigger("Skill0");
+                            break;
+                        case 5:
+                            Character.Instance.Main.SetTrigger("Evasion");
+                            break;
+                        case 6:
+                            Character.Instance.SwitchCharacter();
+                            break;
+                        case 7:
+                            Character.Instance.Main.SetTrigger("Skill1");
+                            break;
+                        case 8:
+                            Character.Instance.Main.SetTrigger("Skill2");
+                            break;
+                        case 9:
+                            Character.Instance.Main.SetTrigger("Skill3");
+                            break;
+                        case 10:
+                            Character.Instance.Main.SetTrigger("Ult");
+                            break;
+                        case 11:
+                            break;
+                        case 12:
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
         }
     }
 

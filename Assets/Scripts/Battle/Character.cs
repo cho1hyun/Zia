@@ -11,7 +11,7 @@ public class Character : MonoBehaviour
 
     public List<Transform> Characters;
 
-    Animator Main;
+    public Animator Main;
 
     KeyCode a, b, c, d;
 
@@ -80,7 +80,7 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void switchCharacter(int n = 1)
+    public void SwitchCharacter(int n = 1)
     {
         Vector3 pos = Characters[0].localPosition;
         Characters[0].localPosition = Characters[n].localPosition;
@@ -96,7 +96,14 @@ public class Character : MonoBehaviour
     IEnumerator GameManagerWait()
     {
         Instance = this;
+
+        while (Characters == null || Characters.Count <= 0 || Characters[0].childCount <= 0 || Characters[0].GetChild(0).GetComponent<Animator>() == null)
+        {
+            yield return null;
+        }
+
         Main = Characters[0].GetChild(0).GetComponent<Animator>();
+        Main.SetBool("Dagger", true);
 
         a = KeyCode.UpArrow;
         b = KeyCode.DownArrow;
