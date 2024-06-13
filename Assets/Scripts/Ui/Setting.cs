@@ -64,11 +64,11 @@ public class Setting : MonoBehaviour
 
                 if (i == 0)
                 {
-                    UiManager.Instance.menuKey = KeyCode.None;
+                    GameManager.Instance.menuKey = KeyCode.None;
                 }
                 else
                 {
-                    UiManager.Instance.keys[i - 1] = KeyCode.None;
+                    GameManager.Instance.keys[i - 1] = KeyCode.None;
                 }
             }
             else
@@ -92,26 +92,26 @@ public class Setting : MonoBehaviour
 
     public void Controll(int mode)
     {
-        UiManager.Instance.mode = (Mode)mode;
+        GameManager.Instance.mode = (Mode)mode;
 
         for (int i = 0; i < ModePc.Count; i++)
         {
-            ModePc[i].SetActive(UiManager.Instance.mode == Mode.PC);
+            ModePc[i].SetActive(GameManager.Instance.mode == Mode.PC);
         }
 
         for (int i = 0; i < ModeMobile.Count; i++)
         {
-            ModeMobile[i].SetActive(UiManager.Instance.mode == Mode.Mobile);
+            ModeMobile[i].SetActive(GameManager.Instance.mode == Mode.Mobile);
         }
 
-        for (int i = 0; i < Ingame.Instance.ModePc.Count; i++)
+        for (int i = 0; i < UiManager.Instance.ingame.ModePc.Count; i++)
         {
-            Ingame.Instance.ModePc[i].SetActive(UiManager.Instance.mode == Mode.PC);
+            UiManager.Instance.ingame.ModePc[i].SetActive(GameManager.Instance.mode == Mode.PC);
         }
 
-        for (int i = 0; i < Ingame.Instance.ModeMobile.Count; i++)
+        for (int i = 0; i < UiManager.Instance.ingame.ModeMobile.Count; i++)
         {
-            Ingame.Instance.ModeMobile[i].SetActive(UiManager.Instance.mode == Mode.Mobile);
+            UiManager.Instance.ingame.ModeMobile[i].SetActive(GameManager.Instance.mode == Mode.Mobile);
         }
 
         ShowKeyObj(ShowKey);
@@ -119,63 +119,60 @@ public class Setting : MonoBehaviour
 
     public void ShowCooltime(bool Show)
     {
-        for (int i = 0; i < Ingame.Instance.SkillGroup.childCount; i++)
+        for (int i = 0; i < UiManager.Instance.ingame.SkillGroup.childCount; i++)
         {
-            Ingame.Instance.SkillGroup.GetChild(i).GetComponent<Skill>().cooltimeText.gameObject.SetActive(Show);
+            UiManager.Instance.ingame.SkillGroup.GetChild(i).GetComponent<Skill>().cooltimeText.gameObject.SetActive(Show);
         }
 
-        for (int i = 0; i < Ingame.Instance.Skills.childCount; i++)
+        for (int i = 0; i < UiManager.Instance.ingame.Skills.childCount; i++)
         {
-            Ingame.Instance.Skills.GetChild(i).GetComponent<Skill>().cooltimeText.gameObject.SetActive(Show);
+            UiManager.Instance.ingame.Skills.GetChild(i).GetComponent<Skill>().cooltimeText.gameObject.SetActive(Show);
         }
     }
 
     public void ShowKeyObj(bool Show)
     {
-        if (Ingame.Instance == null)
-            return;
-
         ShowKey = Show;
 
-        for (int i = 0; i < Ingame.Instance.Key.Count; i++)
+        for (int i = 0; i < UiManager.Instance.ingame.Key.Count; i++)
         {
-            Ingame.Instance.Key[i].SetActive(Show && UiManager.Instance.mode == Mode.PC);
+            UiManager.Instance.ingame.Key[i].SetActive(Show && GameManager.Instance.mode == Mode.PC);
         }
 
-        for (int i = 0; i < Ingame.Instance.SkillGroup.childCount; i++)
+        for (int i = 0; i < UiManager.Instance.ingame.SkillGroup.childCount; i++)
         {
-            Ingame.Instance.SkillGroup.GetChild(i).GetComponent<Skill>().keyObj.SetActive(Show && UiManager.Instance.mode == Mode.PC);
+            UiManager.Instance.ingame.SkillGroup.GetChild(i).GetComponent<Skill>().keyObj.SetActive(Show && GameManager.Instance.mode == Mode.PC);
         }
 
-        for (int i = 0; i < Ingame.Instance.Skills.childCount; i++)
+        for (int i = 0; i < UiManager.Instance.ingame.Skills.childCount; i++)
         {
-            Ingame.Instance.Skills.GetChild(i).GetComponent<Skill>().keyObj.SetActive(Show && UiManager.Instance.mode == Mode.PC);
+            UiManager.Instance.ingame.Skills.GetChild(i).GetComponent<Skill>().keyObj.SetActive(Show && GameManager.Instance.mode == Mode.PC);
         }
     }
 
     public TMP_Text SetKey(string key)
     {
-        for (int i = 0; i < Ingame.Instance.Key.Count; i++)
+        for (int i = 0; i < UiManager.Instance.ingame.Key.Count; i++)
         {
-            if (Ingame.Instance.Key[i].GetComponent<TMP_Text>() != null && Ingame.Instance.Key[i].GetComponent<TMP_Text>().text == key)
+            if (UiManager.Instance.ingame.Key[i].GetComponent<TMP_Text>() != null && UiManager.Instance.ingame.Key[i].GetComponent<TMP_Text>().text == key)
             {
-                return nowKey = Ingame.Instance.Key[i].GetComponent<TMP_Text>();
+                return nowKey = UiManager.Instance.ingame.Key[i].GetComponent<TMP_Text>();
             }
         }
 
-        for (int i = 0; i < Ingame.Instance.SkillGroup.childCount; i++)
+        for (int i = 0; i < UiManager.Instance.ingame.SkillGroup.childCount; i++)
         {
-            if (Ingame.Instance.SkillGroup.GetChild(i).GetComponent<Skill>().keyText.text == key)
+            if (UiManager.Instance.ingame.SkillGroup.GetChild(i).GetComponent<Skill>().keyText.text == key)
             {
-                return nowKey = Ingame.Instance.SkillGroup.GetChild(i).GetComponent<Skill>().keyText;
+                return nowKey = UiManager.Instance.ingame.SkillGroup.GetChild(i).GetComponent<Skill>().keyText;
             }
         }
 
-        for (int i = 0; i < Ingame.Instance.Skills.childCount; i++)
+        for (int i = 0; i < UiManager.Instance.ingame.Skills.childCount; i++)
         {
-            if (Ingame.Instance.Skills.GetChild(i).GetComponent<Skill>().keyText.text == key)
+            if (UiManager.Instance.ingame.Skills.GetChild(i).GetComponent<Skill>().keyText.text == key)
             {
-                return nowKey = Ingame.Instance.Skills.GetChild(i).GetComponent<Skill>().keyText;
+                return nowKey = UiManager.Instance.ingame.Skills.GetChild(i).GetComponent<Skill>().keyText;
             }
         }
 

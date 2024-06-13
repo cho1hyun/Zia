@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -22,6 +23,15 @@ public class GameManager : MonoBehaviour
 
     public Language language;
 
+    public bool load;
+
+    public Mode mode;
+    public KeyCode menuKey;
+
+    public List<KeyCode> keys;
+
+    public Action languageChange;
+
     public LoadingTableResult LoadResult { get; private set; }
 
     void Awake()
@@ -31,6 +41,10 @@ public class GameManager : MonoBehaviour
             Instance = this;
 
             DontDestroyOnLoad(gameObject);
+
+            if (load)
+                for (int i = 0; i < transform.childCount; i++)
+                    transform.GetChild(i).gameObject.SetActive(i == 0);
         }
         else
         {
@@ -125,5 +139,16 @@ public class GameManager : MonoBehaviour
             default:
                 return 0;
         }
+    }
+
+    public void Quit()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_WEBPLAYER
+        Application.OpenURL(webplayerQuitURL);
+#else
+        Application.Quit();
+#endif
     }
 }

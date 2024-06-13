@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Ingame : MonoBehaviour
 {
-    public static Ingame Instance;
-
     public Joystick Joystick;
     public Transform SkillGroup;
     public Transform Skills;
@@ -18,14 +16,9 @@ public class Ingame : MonoBehaviour
     public List<GameObject> ModeMobile;
     public List<GameObject> Key;
 
-    void Awake()
-    {
-        Instance = Instance == null ? this : Instance;
-    }
-
     void Start()
     {
-        SetViewMode(UiManager.Instance.mode);
+        SetViewMode(GameManager.Instance.mode);
 
         Tiktok.TimeSet();
 
@@ -43,13 +36,13 @@ public class Ingame : MonoBehaviour
 
         for (int i = 0; i < SkillGroup.childCount; i++)
         {
-            SkillGroup.GetChild(i).GetComponent<Skill>().key = UiManager.Instance.keys[a];
+            SkillGroup.GetChild(i).GetComponent<Skill>().key = GameManager.Instance.keys[a];
             a++;
         }
 
         for (int i = 0; i < Skills.childCount; i++)
         {
-            Skills.GetChild(i).GetComponent<Skill>().key = UiManager.Instance.keys[a];
+            Skills.GetChild(i).GetComponent<Skill>().key = GameManager.Instance.keys[a];
             a++;
         }
     }

@@ -21,7 +21,7 @@ public class Skill : MonoBehaviour
 
     public void Update()
     {
-        if (UiManager.Instance.mode == Mode.PC && !UiManager.Instance.setting.gameObject.activeSelf && Input.GetKey(key) && delay <= 0f)
+        if (GameManager.Instance.mode == Mode.PC && !UiManager.Instance.setting.gameObject.activeSelf && Input.GetKey(key) && delay <= 0f)
         {
             UseSkill();
 
@@ -51,7 +51,7 @@ public class Skill : MonoBehaviour
         {
             StartCoroutine(CoolTimeRun());
 
-            Ingame.Instance.Boss.GetDamage(damage, hitCount);
+            UiManager.Instance.ingame.Boss.GetDamage(damage, hitCount);
         }
     }
 

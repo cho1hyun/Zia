@@ -6,6 +6,10 @@ public class Lobby : MonoBehaviour
 {
     public Notice Notice;
 
+    public DungeonInfo DungeonInfo;
+
+    public GameObject exit;
+
     int openCount;
 
     void OnEnable()

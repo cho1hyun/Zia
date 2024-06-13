@@ -43,14 +43,14 @@ public class InputThekey : MonoBehaviour
 
     Sprite SetKeySprite()
     {
-        if (key == UiManager.Instance.menuKey)
+        if (key == GameManager.Instance.menuKey)
         {
             return Resources.Load<SpriteAtlas>("Atlas/Black").GetSprite(key.ToString());
         }
 
-        for (int i = 0; i < UiManager.Instance.keys.Count; i++)
+        for (int i = 0; i < GameManager.Instance.keys.Count; i++)
         {
-            if (key == UiManager.Instance.keys[i])
+            if (key == GameManager.Instance.keys[i])
             {
                 return Resources.Load<SpriteAtlas>("Atlas/Black").GetSprite(key.ToString());
             }
@@ -69,16 +69,16 @@ public class InputThekey : MonoBehaviour
                 {
                     if (i == 0)
                     {
-                        UiManager.Instance.menuKey = key;
+                        GameManager.Instance.menuKey = key;
                     }
 
-                    if (i >= 1 && i <= UiManager.Instance.keys.Count)
+                    if (i >= 1 && i <= GameManager.Instance.keys.Count)
                     {
-                        UiManager.Instance.keys[i - 1] = key;
+                        GameManager.Instance.keys[i - 1] = key;
 
-                        if (i >= 5 && i <= 10 && Ingame.Instance != null) Ingame.Instance.SkillGroup.GetChild(i - 5).GetComponent<Skill>().key = key;
+                        if (i >= 5 && i <= 10) UiManager.Instance.ingame.SkillGroup.GetChild(i - 5).GetComponent<Skill>().key = key;
 
-                        if (i >= 11 && i <= 12 && Ingame.Instance != null) Ingame.Instance.Skills.GetChild(i - 11).GetComponent<Skill>().key = key;
+                        if (i >= 11 && i <= 12) UiManager.Instance.ingame.Skills.GetChild(i - 11).GetComponent<Skill>().key = key;
                     }
                 }
             }

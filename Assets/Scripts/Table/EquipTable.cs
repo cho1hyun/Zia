@@ -13,7 +13,7 @@ public enum WeaponType
 public enum WeaponSubType
 {
     None,
-    Dragger,
+    Dagger,
     Sword,
     Spear,
     Gauntlet,

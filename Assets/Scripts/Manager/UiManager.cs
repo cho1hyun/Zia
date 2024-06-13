@@ -10,40 +10,60 @@ public class UiManager : MonoBehaviour
 
     public Logo logo;
 
+    public Lobby lobby;
+
+    public Ingame ingame;
+
     public Setting setting;
 
     public GameObject toast;
     public TMP_Text toastMessage;
 
-    public bool load;
-
-    public Mode mode; 
-    public KeyCode menuKey;
-
-    public List<KeyCode> keys;
-
     void Awake()
     {
         Instance = this;
-
-        if (load)
-            for (int i = 0; i < transform.childCount; i++)
-                transform.GetChild(i).gameObject.SetActive(i == 0);
     }
 
     void Update()
     {
         if (InPutTrue())
         {
-            setting.SettingUI.SetActive(!setting.gameObject.activeSelf && transform.GetChild(1).gameObject.activeSelf && !transform.GetChild(2).gameObject.activeSelf);
-            setting.ShowSettong(!setting.gameObject.activeSelf);
-
+            if (lobby.gameObject.activeSelf && !ingame.gameObject.activeSelf)
+            {
+                if (setting.gameObject.activeSelf)
+                {
+                    setting.SetSetting(false);
+                }
+                else if (lobby.Notice.gameObject.activeSelf)
+                {
+                    lobby.Notice.Open(false);
+                }
+                else if (lobby.DungeonInfo.gameObject.activeSelf)
+                {
+                    lobby.DungeonInfo.gameObject.SetActive(false);
+                }
+                else
+                {
+                    lobby.exit.SetActive(!lobby.exit.activeSelf);
+                }
+            }
+            else if (!lobby.gameObject.activeSelf && ingame.gameObject.activeSelf)
+            {
+                if (setting.SettingUI.activeSelf)
+                {
+                    setting.SettingUI.SetActive(false);
+                }
+                else
+                {
+                    setting.ShowSettong(!setting.gameObject.activeSelf);
+                }
+            }
         }
     }
 
     bool InPutTrue()
     {
-        if (mode != Mode.PC)
+        if (GameManager.Instance.mode != Mode.PC)
             return false;
 
         if (setting.nowKeySet != null)
@@ -64,7 +84,7 @@ public class UiManager : MonoBehaviour
         if (transform.GetChild(7).gameObject.activeSelf)
             return false;
 
-        if (Input.GetKeyDown(menuKey))
+        if (Input.GetKeyDown(GameManager.Instance.menuKey))
             return true;
 
         return false;
