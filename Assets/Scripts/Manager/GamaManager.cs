@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public enum LoadingTableResult
@@ -18,9 +16,9 @@ public enum Mode
     Mobile = 2,
 }
 
-public class GamaManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    public static GamaManager Instance;
+    public static GameManager Instance;
 
     public Language language;
 

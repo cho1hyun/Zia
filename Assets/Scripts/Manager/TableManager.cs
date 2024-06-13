@@ -88,7 +88,10 @@ public class TableManager
 
     public string GetLocalizeText(int id)
     {
-        switch (GamaManager.Instance.language)
+        if (id == 0)
+            return string.Empty;
+
+        switch (GameManager.Instance.language)
         {
             case Language.None:
                 return LocalizeTextData[id].id.ToString();
@@ -110,7 +113,7 @@ public class TableManager
 
     public string GetScenarioText(int id)
     {
-        switch (GamaManager.Instance.language)
+        switch (GameManager.Instance.language)
         {
             case Language.None:
                 return ScenarioTextData[id].id.ToString();

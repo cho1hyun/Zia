@@ -132,6 +132,9 @@ public class Setting : MonoBehaviour
 
     public void ShowKeyObj(bool Show)
     {
+        if (Ingame.Instance == null)
+            return;
+
         ShowKey = Show;
 
         for (int i = 0; i < Ingame.Instance.Key.Count; i++)

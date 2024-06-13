@@ -15,16 +15,11 @@ public class Character : MonoBehaviour
 
     void Update()
     {
-        if (back)
-        {
-            transform.eulerAngles += new Vector3(0, 180 * rotateSpeed * Time.deltaTime, 0);
-            back = false;
-            z = 1;
-        }
+        transform.GetChild(0).localScale = new Vector3(1, 1, back ? -1 : 1);
 
         transform.Translate(Vector3.forward * GetKeyInput().z * speed * Time.deltaTime);
 
-        transform.eulerAngles += new Vector3(0, GetKeyInput().x * rotateSpeed * Time.deltaTime, 0);
+        transform.eulerAngles += new Vector3(0, back ? -GetKeyInput().x : GetKeyInput().x * rotateSpeed * Time.deltaTime, 0);
 
         AnimMove(GetKeyInput() != Vector3.zero);
     }
@@ -50,6 +45,7 @@ public class Character : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             z = 1;
+            back = false;
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
@@ -66,12 +62,11 @@ public class Character : MonoBehaviour
         return new Vector3(x, 0, z);
     }
 
-
     void AnimMove(bool isMove)
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < transform.GetChild(0).childCount; i++)
         {
-            transform.GetChild(i).GetChild(0).GetComponent<Animator>().SetBool("Move", isMove);
+            transform.GetChild(0).GetChild(i).GetChild(0).GetComponent<Animator>().SetBool("Move", isMove);
         }
     }
 }

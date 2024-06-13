@@ -74,7 +74,6 @@ public class Notice : MonoBehaviour
 
         if (NoticeBtnPar.childCount <= 0)
         {
-            GetComponent<CanvasGroup>().alpha = 0.0f;
             for (int i = 0; i < noticeList.Count; i++)
             {
                 Button button = Instantiate(NoticeBtn, NoticeBtnPar).GetComponent<Button>();
@@ -118,6 +117,6 @@ public class Notice : MonoBehaviour
         }
         Set(0);
 
-        GetComponent<CanvasGroup>().alpha = 1.0f;
+        UiManager.Instance.pade.PadeOff();
     }
 }

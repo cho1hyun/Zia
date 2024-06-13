@@ -8,7 +8,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 0
+  - enabled: 1
+    path: Assets/ACS/CHAPTER0.unity
+    guid: 23b31125abef7c24fbe9748c66a44901
+  - enabled: 1
+    path: Assets/ACS/CHAPTER1.unity
+    guid: 261646897fd9664419dbd3026715603f
+  - enabled: 1
     path: Assets/ACS/ZIA.unity
     guid: 6f2a2c20e8f32f74fba28ea968d31f97
   m_configObjects: {}

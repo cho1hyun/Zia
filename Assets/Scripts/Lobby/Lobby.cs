@@ -15,5 +15,9 @@ public class Lobby : MonoBehaviour
             Notice.gameObject.SetActive(true);
             openCount++;
         }
+        else
+        {
+            UiManager.Instance.pade.PadeOff();
+        }
     }
 }

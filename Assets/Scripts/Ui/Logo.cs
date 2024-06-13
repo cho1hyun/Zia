@@ -44,9 +44,9 @@ public class Logo : MonoBehaviour
 
         for (int i = 1; i <= TableManager.Instance.getMaxData(); i++)
         {
-            yield return StartCoroutine(TableReader.LoadData(GamaManager.Instance.Address(i), GamaManager.Instance.Sheet(i), TableManager.Instance.GetData));
+            yield return StartCoroutine(TableReader.LoadData(GameManager.Instance.Address(i), GameManager.Instance.Sheet(i), TableManager.Instance.GetData));
 
-            Task<Exception> task = GamaManager.Instance.TableDataLoad(i);
+            Task<Exception> task = GameManager.Instance.TableDataLoad(i);
 
             yield return new WaitUntil(() => task.IsCompleted);
 
