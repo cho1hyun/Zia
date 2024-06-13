@@ -58,7 +58,14 @@ public class Notice : MonoBehaviour
 
         noticeImg.sprite = sprites[n];
 
-        noticeImg.GetComponent<RectTransform>().sizeDelta = new Vector2(noticeImg.GetComponent<RectTransform>().sizeDelta.x, noticeImg.GetComponent<RectTransform>().sizeDelta.x / noticeImg.sprite.bounds.size.x * noticeImg.sprite.bounds.size.y);
+        if (noticeImg.sprite != null)
+        {
+            noticeImg.GetComponent<RectTransform>().sizeDelta = new Vector2(noticeImg.GetComponent<RectTransform>().sizeDelta.x, noticeImg.GetComponent<RectTransform>().sizeDelta.x / noticeImg.sprite.bounds.size.x * noticeImg.sprite.bounds.size.y);
+        }
+        else
+        {
+            noticeImg.GetComponent<RectTransform>().sizeDelta = Vector2.zero;
+        }
 
 
         for (int i = 0; i < NoticeBtnPar.childCount; i++)
@@ -107,12 +114,18 @@ public class Notice : MonoBehaviour
                 UnityWebRequest www = UnityWebRequestTexture.GetTexture(noticeList[i].img);
 
                 yield return www.SendWebRequest();
+                if (www.result == UnityWebRequest.Result.Success)
+                {
+                    Texture2D texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
 
-                Texture2D texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
+                    Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
 
-                Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-
-                sprites.Add(sprite);
+                    sprites.Add(sprite);
+                }
+                else
+                {
+                    sprites.Add(null);
+                }
             }
         }
         Set(0);

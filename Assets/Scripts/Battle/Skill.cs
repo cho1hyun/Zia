@@ -19,6 +19,8 @@ public class Skill : MonoBehaviour
 
     float delay;
 
+    int atkCount;
+
     public void Update()
     {
         if (GameManager.Instance.mode == Mode.PC && !UiManager.Instance.setting.gameObject.activeSelf && Input.GetKey(key) && delay <= 0f)
@@ -62,6 +64,13 @@ public class Skill : MonoBehaviour
                     {
                         case 4:
                             Character.Instance.Main.SetTrigger("Skill0");
+
+                            if (Character.Instance.Main.GetInteger("Type") == 90000)
+                            {
+                                Character.Instance.Main.SetInteger("AttackCount", atkCount);
+                                atkCount = atkCount >= 4 ? 0 : atkCount + 1;
+                            }
+                            Debug.Log(atkCount);
                             break;
                         case 5:
                             Character.Instance.Main.SetTrigger("Evasion");

@@ -27,13 +27,16 @@ public class Character : MonoBehaviour
 
     void Update()
     {
-        transform.GetChild(0).localScale = new Vector3(1, 1, back ? -1 : 1);
+        if (Main != null && (Main.GetCurrentAnimatorStateInfo(0).IsName("Idle") || Main.GetCurrentAnimatorStateInfo(0).IsName("Run")))
+        {
+            transform.GetChild(0).localScale = new Vector3(1, 1, back ? -1 : 1);
 
-        transform.Translate(Vector3.forward * GetKeyInput().z * speed * Time.deltaTime);
+            transform.Translate(Vector3.forward * GetKeyInput().z * speed * Time.deltaTime);
 
-        transform.eulerAngles += new Vector3(0, back ? -GetKeyInput().x : GetKeyInput().x * rotateSpeed * Time.deltaTime, 0);
+            transform.eulerAngles += new Vector3(0, back ? -GetKeyInput().x : GetKeyInput().x * rotateSpeed * Time.deltaTime, 0);
 
-        AnimMove(GetKeyInput() != Vector3.zero);
+            AnimMove(GetKeyInput() != Vector3.zero);
+        }
     }
 
     Vector3 GetKeyInput()
