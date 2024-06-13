@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public class Character : MonoBehaviour
@@ -103,7 +104,11 @@ public class Character : MonoBehaviour
         }
 
         Main = Characters[0].GetChild(0).GetComponent<Animator>();
-        Main.SetBool("Dagger", true);
+
+        for (int i = 0; i < Characters.Count; i++)
+        {
+            Characters[i].GetChild(0).GetComponent<Animator>().SetInteger("Type", int.Parse(Regex.Replace(Characters[i].GetChild(0).name, @"\D", string.Empty)));
+        }
 
         a = KeyCode.UpArrow;
         b = KeyCode.DownArrow;

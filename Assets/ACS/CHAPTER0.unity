@@ -8365,6 +8365,7 @@ MonoBehaviour:
   speed: 0
   rotateSpeed: 0
   Characters: []
+  Main: {fileID: 0}
 --- !u!114 &138935802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119663,6 +119664,7 @@ MonoBehaviour:
   - {fileID: 1199322729667888700}
   - {fileID: 250706416088308690}
   - {fileID: 1966722452783083210}
+  Main: {fileID: 0}
 --- !u!136 &6765208192397487129
 CapsuleCollider:
   m_ObjectHideFlags: 0
