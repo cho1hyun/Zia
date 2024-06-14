@@ -1,9 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.Tilemaps;
+using UnityEngine;
 
 public class TableReader
 {
@@ -35,7 +34,7 @@ public class TableReader
 
             for (int j = 0; j < header.Length; j++)
             {
-                if (header[j].Contains("#"))
+                if (header[j].Contains("#") || string.IsNullOrWhiteSpace(header[j]))
                     continue;
 
                 object finalvalue = values[j].Trim();

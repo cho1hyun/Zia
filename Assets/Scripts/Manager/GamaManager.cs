@@ -111,6 +111,20 @@ public class GameManager : MonoBehaviour
                 return CharacterTable.address;
             case 7:
                 return CharacterSkillTable.address;
+            case 8:
+                return MonsterTable.address;
+            case 9:
+                return MonsterSkillTable.address;
+            case 10:
+                return StageDungeonTable.address;
+            case 11:
+                return StageWeatherTable.address;
+            case 12:
+                return StageSpawnOrderTable.address;
+            case 13:
+                return StageSpawnTable.address;
+            case 14:
+                return QuestTable.address;
             default:
                 return string.Empty;
         }
@@ -136,6 +150,20 @@ public class GameManager : MonoBehaviour
                 return CharacterTable.sheet;
             case 7:
                 return CharacterSkillTable.sheet;
+            case 8:
+                return MonsterTable.sheet;
+            case 9:
+                return MonsterSkillTable.sheet;
+            case 10:
+                return StageDungeonTable.sheet;
+            case 11:
+                return StageWeatherTable.sheet;
+            case 12:
+                return StageSpawnOrderTable.sheet;
+            case 13:
+                return StageSpawnTable.sheet;
+            case 14:
+                return QuestTable.sheet;
             default:
                 return 0;
         }

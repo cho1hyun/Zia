@@ -68,9 +68,9 @@ public class CharacterTable_Parser
             tableData.desc = int.TryParse(data[i][nameof(tableData.desc)].ToString(), out int desc) ? desc : 0;
             tableData.gender = Enum.TryParse(data[i][nameof(tableData.gender)].ToString(), out Gender gender) ? gender : Gender.None;
             tableData.rank = Enum.TryParse(data[i][nameof(tableData.rank)].ToString(), out Rank rank) ? rank : Rank.None;
-            tableData.class_ = Enum.TryParse(data[i][nameof(tableData.class_)].ToString(), out Class_ class_) ? class_ : Class_.None;
+            tableData.class_ = int.TryParse(data[i][nameof(tableData.class_)].ToString(), out int class_) ? (Class_)class_ : Class_.None;
             tableData.weapon = Enum.TryParse(data[i][nameof(tableData.weapon)].ToString(), out WeaponSubType weapon) ? weapon : WeaponSubType.None;
-            tableData.attribute = int.TryParse(data[i][nameof(tableData.attribute)].ToString(), out int attribute) ? (Attribute_)attribute : (Attribute_)(-1);
+            tableData.attribute = int.TryParse(data[i][nameof(tableData.attribute)].ToString(), out int attribute) ? (Attribute_)attribute : Attribute_.None;
             tableData.hp = int.TryParse(data[i][nameof(tableData.hp)].ToString(), out int hp) ? hp : 0;
             tableData.atk = int.TryParse(data[i][nameof(tableData.atk)].ToString(), out int atk) ? atk : 0;
             tableData.def = int.TryParse(data[i][nameof(tableData.def)].ToString(), out int def) ? def : 0;

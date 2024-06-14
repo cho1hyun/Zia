@@ -17,7 +17,7 @@ public class TableManager
     public static event OnInitializedTable OnInitializedTableEvent;
     public bool IsInitialized = false;
 
-    private const int _MAXDATA = 8;   //Å×ÀÌºí ÃÑ °¹¼ö
+    private const int _MAXDATA = 15;   //Å×ÀÌºí ÃÑ °¹¼ö
 
     List<Dictionary<string, object>> data;
 
@@ -60,6 +60,34 @@ public class TableManager
         {
             CharacterSkillData = new CharacterSkillTable_Parser().Parse();
         }
+        else if (n == 8)
+        {
+            MonsterData = new MonsterTable_Parser().Parse();
+        }
+        else if (n == 9)
+        {
+            MonsterSkillData = new MonsterSkillTable_Parser().Parse();
+        }
+        else if (n == 10)
+        {
+            StageDungeonData = new StageDungeonTable_Parser().Parse();
+        }
+        else if (n == 11)
+        {
+            StageWeatherData = new StageWeatherTable_Parser().Parse();
+        }
+        else if (n == 12)
+        {
+            StageSpawnOrderData = new StageSpawnOrderTable_Parser().Parse();
+        }
+        else if (n == 13)
+        {
+            StageSpawnData = new StageSpawnTable_Parser().Parse();
+        }
+        else if (n == 14)
+        {
+            QuestData = new QuestTable_Parser().Parse();
+        }
         else if (n == getMaxData())
         {
             IsInitialized = true;
@@ -85,6 +113,13 @@ public class TableManager
     Dictionary<int, EquipTable> EquipData;
     Dictionary<int, CharacterTable> CharacterData;
     Dictionary<int, CharacterSkillTable> CharacterSkillData;
+    Dictionary<int, MonsterTable> MonsterData;
+    Dictionary<int, MonsterSkillTable> MonsterSkillData;
+    Dictionary<int, StageDungeonTable> StageDungeonData;
+    Dictionary<int, StageWeatherTable> StageWeatherData;
+    Dictionary<int, StageSpawnOrderTable> StageSpawnOrderData;
+    Dictionary<int, StageSpawnTable> StageSpawnData;
+    Dictionary<int, QuestTable> QuestData;
 
     public string GetLocalizeText(int id)
     {
