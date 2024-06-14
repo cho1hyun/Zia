@@ -49,7 +49,7 @@ public class Skill : MonoBehaviour
 
     public void UseSkill()
     {
-        if (!cooltimeImg.gameObject.activeSelf)
+        if (!cooltimeImg.gameObject.activeSelf && (Character.Instance.Main.GetCurrentAnimatorStateInfo(0).IsName("Idle") || Character.Instance.Main.GetCurrentAnimatorStateInfo(0).IsName("Run")))
         {
             StartCoroutine(CoolTimeRun());
 
