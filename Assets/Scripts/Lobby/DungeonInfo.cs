@@ -58,7 +58,7 @@ public class DungeonInfo : MonoBehaviour
         Dungeon.GetChild(2).GetChild(1).GetChild(0).GetComponent<TMP_Text>().text = string.Format(TableManager.Instance.GetLocalizeText(weather.WthName));
         Dungeon.GetChild(2).GetChild(1).GetChild(0).GetChild(0).GetComponent<Image>().sprite = spriteAtlasI.GetSprite(weather.id.ToString());
         Dungeon.GetChild(3).GetChild(1).GetChild(1).GetComponent<TMP_Text>().text = string.Format(TableManager.Instance.GetLocalizeText(GetBossInfo(dungeon).name));
-        Dungeon.GetChild(3).GetChild(1).GetChild(1).GetChild(1).GetComponent<Image>().sprite = TableManager.Instance.GetCharacterAttribute(GetBossInfo(dungeon).attribute);
+        Dungeon.GetChild(3).GetChild(1).GetChild(1).GetChild(0).GetComponent<Image>().sprite = TableManager.Instance.GetCharacterAttribute(GetBossInfo(dungeon).attribute);
 
         QuestTable quest = TableManager.Instance.GetFirstQuest();
 
