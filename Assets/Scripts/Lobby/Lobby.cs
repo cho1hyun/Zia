@@ -9,6 +9,8 @@ public class Lobby : MonoBehaviour
 
     public Notice Notice;
 
+    public CharacterInfo CharacterInfo;
+
     public DungeonInfo DungeonInfo;
 
     public GameObject Shop;
@@ -34,6 +36,9 @@ public class Lobby : MonoBehaviour
 
             if (DungeonInfo.gameObject.activeSelf)
                 DungeonInfo.gameObject.SetActive(false);
+
+            if (CharacterInfo.gameObject.activeSelf)
+                CharacterInfo.OpenCharacter(false);
 
             if (exit.activeSelf)
                 exit.SetActive(false);
@@ -63,8 +68,6 @@ public class Lobby : MonoBehaviour
             {
                 yield return null;
             }
-
-            UiManager.Instance.pade.PadeOff();
         }
     }
 }

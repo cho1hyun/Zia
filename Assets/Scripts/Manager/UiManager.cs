@@ -42,6 +42,10 @@ public class UiManager : MonoBehaviour
                 {
                     lobby.DungeonInfo.gameObject.SetActive(false);
                 }
+                else if (lobby.CharacterInfo.gameObject.activeSelf)
+                {
+                    lobby.CharacterInfo.OpenCharacter(false);
+                }
                 else if (lobby.Shop.activeSelf)
                 {
                     lobby.Shop.SetActive(false);
