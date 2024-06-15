@@ -74,14 +74,20 @@ public class Logo : MonoBehaviour
 
     public void GoogleLogin()
     {
+        string userid = "Google_" + UnityEngine.Random.Range(0, 10000);
+        GoogleLoginUI.transform.GetChild(2).GetComponent<TMP_Text>().text = userid;
+        GameManager.Instance.userData = new UserData().SetUserData(userid);
+
         LoginButton.SetActive(false);
         GoogleLoginUI.SetActive(true);
     }
 
     public void LoginAction()
     {
-        LoginButton.SetActive(false);
+        string userid = LoginUI.transform.GetChild(1).GetComponent<TMP_InputField>().text;
+        GameManager.Instance.userData = new UserData().SetUserData(userid);
 
+        LoginButton.SetActive(false);
         text.gameObject.SetActive(true);
         text.text = string.Format(TableManager.Instance.GetLocalizeText(26));
 

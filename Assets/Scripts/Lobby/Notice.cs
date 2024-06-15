@@ -42,6 +42,7 @@ public class Notice : MonoBehaviour
                 Application.OpenURL(noticeList[nowNotice].link);
                 break;
             case NoticeType.Shop:
+                UiManager.Instance.lobby.OpenShop();
                 break;
             default:
                 break;

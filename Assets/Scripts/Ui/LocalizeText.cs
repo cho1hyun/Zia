@@ -7,6 +7,7 @@ public class LocalizeText : MonoBehaviour
 {
     public TMP_Text _text;
     public int _textId;
+    public List<int> _randomTextdis;
 
     void Awake()
     {
@@ -17,6 +18,9 @@ public class LocalizeText : MonoBehaviour
     {
         if (_textId != 0)
             _text.text = string.Format(TableManager.Instance.GetLocalizeText(_textId));
+
+        if (_textId == 0 && _randomTextdis.Count > 0)
+            _text.text = string.Format(TableManager.Instance.GetLocalizeText(_randomTextdis[Random.Range(0, _randomTextdis.Count)]));
     }
 
     IEnumerator GameManagerWait()

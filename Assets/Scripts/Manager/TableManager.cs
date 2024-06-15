@@ -1,4 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.U2D;
 
 public class TableManager
 {
@@ -215,6 +218,37 @@ public class TableManager
         return CharacterData[id];
     }
 
+    public Sprite GetCharacterAttribute(Attribute_ attribute_)
+    {
+        SpriteAtlas spriteAtlas = Resources.Load<SpriteAtlas>("Atlas/Icon");
+
+        string fileNasme = "Attribute_";
+        switch (attribute_)
+        {
+            case Attribute_.None:
+                return null;
+            case Attribute_.Mare:
+                fileNasme += 11;
+                break;
+            case Attribute_.Flamma:
+                fileNasme += 1;
+                break;
+            case Attribute_.Vita:
+                fileNasme += 15;
+                break;
+            case Attribute_.Lucere:
+                fileNasme += 8;
+                break;
+            case Attribute_.Umbra:
+                fileNasme += 6;
+                break;
+            default:
+                return null;
+        }
+
+        return spriteAtlas.GetSprite(fileNasme);
+    }
+
     public CharacterSkillTable GetCharacterSkillSet(int id)
     {
         if (!IsInitialized)
@@ -245,5 +279,90 @@ public class TableManager
         }
 
         return null;
+    }
+
+    public MonsterTable GetMonster(int id)
+    {
+        return MonsterData[id];
+    }
+
+    public MonsterSkillTable GetMonsterSkill(int id)
+    {
+        return MonsterSkillData[id];
+    }
+
+    public StageDungeonTable GetStageDungeon(int id)
+    {
+        return StageDungeonData[id];
+    }
+
+    public StageDungeonTable GetPreviousStageDungeon(int id)
+    {
+        StageDungeonTable Previous = StageDungeonData[id];
+
+        foreach (var item in StageDungeonData)
+        {
+            if (item.Key == id)
+                return Previous;
+
+            if (item.Value.DgChapter != 0 && item.Value.DgStage != 0)
+                Previous = item.Value;
+        }
+
+        return StageDungeonData[id];
+    }
+
+    public StageDungeonTable GetNextStageDungeon(int id)
+    {
+        bool next = false;
+
+        foreach (var item in StageDungeonData)
+        {
+            if (next)
+                return item.Value;
+
+            if (item.Key == id)
+                next = true;
+        }
+
+        return StageDungeonData[id];
+    }
+
+    public List<StageDungeonTable> GetStageDungeonList(int Chapter)
+    {
+        List<StageDungeonTable> list = new List<StageDungeonTable>();
+
+        foreach (var item in StageDungeonData)
+        {
+            if (item.Value.DgChapter == Chapter)
+            {
+                list.Add(item.Value);
+            }
+        }
+        return list;
+    }
+
+    public StageWeatherTable GetStageWeather(int id)
+    {
+        return StageWeatherData[id];
+    }
+
+    public StageSpawnOrderTable GetStageSpawnOrder(int id)
+    {
+        return StageSpawnOrderData[id];
+    }
+
+    public StageSpawnTable GetStageSpawnData(int id)
+    {
+        return StageSpawnData[id];
+    }
+
+    public QuestTable GetQuest(int id)
+    {
+        return QuestData[id];
+    }
+    public QuestTable GetFirstQuest()
+    {
+        return QuestData.First().Value;
     }
 }

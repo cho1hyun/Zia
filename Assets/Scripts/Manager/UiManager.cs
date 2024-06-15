@@ -42,6 +42,10 @@ public class UiManager : MonoBehaviour
                 {
                     lobby.DungeonInfo.gameObject.SetActive(false);
                 }
+                else if (lobby.Shop.activeSelf)
+                {
+                    lobby.Shop.SetActive(false);
+                }
                 else
                 {
                     lobby.exit.SetActive(!lobby.exit.activeSelf);
@@ -75,13 +79,7 @@ public class UiManager : MonoBehaviour
         if (transform.GetChild(4).gameObject.activeSelf)
             return false;
 
-        if (transform.GetChild(5).gameObject.activeSelf)
-            return false;
-
         if (transform.GetChild(6).gameObject.activeSelf)
-            return false;
-
-        if (transform.GetChild(7).gameObject.activeSelf)
             return false;
 
         if (Input.GetKeyDown(GameManager.Instance.menuKey))

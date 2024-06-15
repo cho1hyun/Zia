@@ -63,18 +63,14 @@ public class Setting : MonoBehaviour
                 InputField.text = string.Empty;
 
                 if (i == 0)
-                {
                     GameManager.Instance.menuKey = KeyCode.None;
-                }
+
                 else
-                {
                     GameManager.Instance.keys[i - 1] = KeyCode.None;
-                }
             }
+
             else
-            {
                 InputField.text = InputField.text;
-            }
         }
 
         nowKeySet = null;
@@ -155,25 +151,19 @@ public class Setting : MonoBehaviour
         for (int i = 0; i < UiManager.Instance.ingame.Key.Count; i++)
         {
             if (UiManager.Instance.ingame.Key[i].GetComponent<TMP_Text>() != null && UiManager.Instance.ingame.Key[i].GetComponent<TMP_Text>().text == key)
-            {
                 return nowKey = UiManager.Instance.ingame.Key[i].GetComponent<TMP_Text>();
-            }
         }
 
         for (int i = 0; i < UiManager.Instance.ingame.SkillGroup.childCount; i++)
         {
             if (UiManager.Instance.ingame.SkillGroup.GetChild(i).GetComponent<Skill>().keyText.text == key)
-            {
                 return nowKey = UiManager.Instance.ingame.SkillGroup.GetChild(i).GetComponent<Skill>().keyText;
-            }
         }
 
         for (int i = 0; i < UiManager.Instance.ingame.Skills.childCount; i++)
         {
             if (UiManager.Instance.ingame.Skills.GetChild(i).GetComponent<Skill>().keyText.text == key)
-            {
                 return nowKey = UiManager.Instance.ingame.Skills.GetChild(i).GetComponent<Skill>().keyText;
-            }
         }
 
         return null;
@@ -186,23 +176,19 @@ public class Setting : MonoBehaviour
             for (int j = 0; j < keys.GetChild(i).childCount; j++)
             {
                 if (keys.GetChild(i).GetChild(j).GetComponent<InputThekey>() != null)
-                {
                     keys.GetChild(i).GetChild(j).GetComponent<InputThekey>().SetKey();
-                }
             }
         }
     }
     public string KeyString(string key)
     {
         if (key.Contains("Alpha"))
-        {
             return key.Replace("Alpha", string.Empty);
-        }
 
         switch (key)
         {
             case "Escape":
-                return key = "Esc";
+                return "Esc";
             default:
                 return key;
         }

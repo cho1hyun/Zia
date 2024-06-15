@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    public UserData userData;
+
     public Language language;
 
     public bool load;
@@ -31,6 +33,7 @@ public class GameManager : MonoBehaviour
     public List<KeyCode> keys;
 
     public Action languageChange;
+    public Action amountChange;
 
     public LoadingTableResult LoadResult { get; private set; }
 
