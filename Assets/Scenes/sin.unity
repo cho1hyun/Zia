@@ -272,6 +272,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _text: {fileID: 0}
   _textId: 700011
+  _randomTextdis: 
 --- !u!1 &61629931
 GameObject:
   m_ObjectHideFlags: 0
@@ -878,6 +879,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _text: {fileID: 0}
   _textId: 0
+  _randomTextdis: 
 --- !u!114 &243885338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -993,7 +995,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &393249960
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1003,18 +1005,19 @@ RectTransform:
   m_GameObject: {fileID: 393249959}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 63556304}
   - {fileID: 657875811}
-  m_Father: {fileID: 1853183500}
+  - {fileID: 436784893}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &393249961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1186,13 +1189,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 436784889}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1622778425}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 393249960}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1545,6 +1548,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _text: {fileID: 0}
   _textId: 0
+  _randomTextdis: 
 --- !u!1 &899587178
 GameObject:
   m_ObjectHideFlags: 0
@@ -1694,6 +1698,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _text: {fileID: 0}
   _textId: 0
+  _randomTextdis: 
 --- !u!1 &973573488
 GameObject:
   m_ObjectHideFlags: 0
@@ -2135,6 +2140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _text: {fileID: 0}
   _textId: 0
+  _randomTextdis: 
 --- !u!114 &1177398979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2595,7 +2601,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1496989389
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3049,6 +3055,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _text: {fileID: 0}
   _textId: 0
+  _randomTextdis: 
 --- !u!1 &1629759111
 GameObject:
   m_ObjectHideFlags: 0
@@ -3319,6 +3326,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _text: {fileID: 0}
   _textId: 0
+  _randomTextdis: 
 --- !u!1 &1765785924
 GameObject:
   m_ObjectHideFlags: 0
@@ -3869,7 +3877,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1496989389}
-  - {fileID: 393249960}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4026,6 +4033,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _text: {fileID: 0}
   _textId: 700010
+  _randomTextdis: 
 --- !u!1 &1935269231
 GameObject:
   m_ObjectHideFlags: 0
@@ -4290,4 +4298,4 @@ SceneRoots:
   - {fileID: 81733831}
   - {fileID: 1853183500}
   - {fileID: 102354211}
-  - {fileID: 436784893}
+  - {fileID: 393249960}
