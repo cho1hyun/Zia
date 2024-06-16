@@ -10106,6 +10106,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5c8d5800cbf5a46ac18fc567ef84f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Weapon:
+  - {fileID: 8119292263084015574}
 --- !u!1 &8014381164254939594
 GameObject:
   m_ObjectHideFlags: 0
@@ -10333,7 +10335,7 @@ GameObject:
   - component: {fileID: 213662585517891076}
   m_Layer: 0
   m_Name: Hammer_01(Clone)
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

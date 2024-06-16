@@ -18,6 +18,8 @@ public class CharacterController : MonoBehaviour
     float z;
     bool back;
 
+    List<int> characterId;
+
     void Update()
     {
         if (Main != null && (Main.GetCurrentAnimatorStateInfo(0).IsName("Idle") || Main.GetCurrentAnimatorStateInfo(0).IsName("Run")))
@@ -30,23 +32,58 @@ public class CharacterController : MonoBehaviour
 
             AnimMove(GetKeyInput() != Vector3.zero);
         }
+
+        AtkCheck();
+    }
+
+    void AtkCheck()
+    {
+        for (int i = 0; i < Main.GetComponent<SkillAction>().Weapon.Count; i++)
+        {
+            Main.GetComponent<SkillAction>().Weapon[i].GetComponent<MeshCollider>().isTrigger = !Main.GetCurrentAnimatorStateInfo(0).IsName("Idle") && !Main.GetCurrentAnimatorStateInfo(0).IsName("Run") && !Main.GetCurrentAnimatorStateInfo(0).IsName("Hit") && !Main.GetCurrentAnimatorStateInfo(0).IsName("Evasion") && !Main.GetCurrentAnimatorStateInfo(0).IsName("Death");
+        }
     }
 
     public void SetCharacter(int num = 0)
     {
+        characterId = new List<int>();
         for (int i = 0; i < Characters.Count; i++)
         {
-            Animator cha = Instantiate(Resources.Load("Character/" + GameManager.Instance.userData.characterSet[0][i].id) as GameObject, Characters[i]).GetComponent<Animator>();
-            cha.SetInteger("Type", GameManager.Instance.userData.characterSet[num][i].id);
+            int id = GameManager.Instance.userData.characterSet[num][i].id;
+            characterId.Add(id);
+            Animator cha = Instantiate(Resources.Load("Character/" + id) as GameObject, Characters[i]).GetComponent<Animator>();
+            cha.SetInteger("Type", id);
 
             if (Main == null)
                 Main = cha.GetComponent<Animator>();
         }
 
+        SetSkill();
+
         a = GameManager.Instance.keys[0];
         b = GameManager.Instance.keys[1];
         c = GameManager.Instance.keys[2];
         d = GameManager.Instance.keys[3];
+    }
+
+    void SetSkill()
+    {
+        int skillset = TableManager.Instance.GetCharacter(characterId[0]).skillset;
+        UiManager.Instance.ingame.SkillGroup.GetChild(3).GetComponent<Skill>().SetSkill(TableManager.Instance.GetCharacterSkill(skillset, SkillType.skill1));
+        UiManager.Instance.ingame.SkillGroup.GetChild(4).GetComponent<Skill>().SetSkill(TableManager.Instance.GetCharacterSkill(skillset, SkillType.skill2));
+        UiManager.Instance.ingame.SkillGroup.GetChild(5).GetComponent<Skill>().SetSkill(TableManager.Instance.GetCharacterSkill(skillset, SkillType.skill3));
+        UiManager.Instance.ingame.SkillGroup.GetChild(6).GetComponent<Skill>().SetSkill(TableManager.Instance.GetCharacterSkill(skillset, SkillType.Ult));
+
+        for (int i = 0; i < UiManager.Instance.ingame.SkillGroup.childCount; i++)
+        {
+            UiManager.Instance.ingame.SkillGroup.GetChild(i).GetComponent<Skill>().ChangeCharacter();
+        }
+
+        for (int i = 0; i < UiManager.Instance.ingame.Skills.childCount; i++)
+        {
+            UiManager.Instance.ingame.Skills.GetChild(i).GetComponent<Skill>().SetSkillUlt(characterId[i + 1]);
+            UiManager.Instance.ingame.Skills.GetChild(i).GetComponent<Skill>().ChangeCharacter();
+        }
     }
 
     Vector3 GetKeyInput()
@@ -104,6 +141,11 @@ public class CharacterController : MonoBehaviour
         Characters[0] = Characters[n];
         Characters[n] = transform;
 
+        int id = characterId[0];
+        characterId[0] = characterId[n];
+        characterId[n] = id;
+
         Main = Characters[0].GetChild(0).GetComponent<Animator>();
+        SetSkill();
     }
 }

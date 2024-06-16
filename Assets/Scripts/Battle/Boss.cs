@@ -108,6 +108,7 @@ public class Boss : MonoBehaviour
         string hpPer = nowHp == Hp ? "100" : (nowHp * 100 / Hp).ToString("F2");
         HpPer.text = hpPer + "%";
 
+        Hpcount.transform.parent.gameObject.SetActive(Hps != 0);
         Hpcount.text = Hps.ToString();
     }
 

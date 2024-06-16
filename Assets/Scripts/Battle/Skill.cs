@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.U2D;
 using UnityEngine.UI;
 
 public class Skill : MonoBehaviour
 {
     public Image cooltimeImg;
+    public Image cooltimeImg2;
+    public Image SkillImg;
     public TMP_Text cooltimeText;
     public GameObject keyObj;
     public TMP_Text keyText;
@@ -21,6 +24,8 @@ public class Skill : MonoBehaviour
 
     int atkCount;
 
+    Coroutine coolRun;
+
     public void Update()
     {
         if (GameManager.Instance.mode == Mode.PC && !UiManager.Instance.setting.gameObject.activeSelf && Input.GetKey(key) && delay <= 0f)
@@ -34,6 +39,27 @@ public class Skill : MonoBehaviour
         {
             delay -= Time.deltaTime;
         }
+    }
+
+    public void ChangeCharacter()
+    {
+        StopCoroutine(coolRun);
+        cooltimeImg.gameObject.SetActive(false);
+    }
+
+    public void SetSkill(SkillSet set)
+    {
+        SpriteAtlas spriteAtlas = Resources.Load<SpriteAtlas>("Atlas/Skill");
+
+        SkillImg.sprite = spriteAtlas.GetSprite(set.name.ToString()); ;
+        coolltime = set.cool;
+    }
+    public void SetSkillUlt(int id)
+    {
+        SpriteAtlas spriteAtlas = Resources.Load<SpriteAtlas>("Atlas/Icon");
+
+        SkillImg.sprite= spriteAtlas.GetSprite(id.ToString());
+        coolltime = TableManager.Instance.GetCharacterSkill(TableManager.Instance.GetCharacter(id).skillset, SkillType.Ult).cool;
     }
 
     public void SetKey(KeyCode code)
@@ -52,9 +78,13 @@ public class Skill : MonoBehaviour
         Animator animator = UiManager.Instance.ingame.Character.Main;
         if (!cooltimeImg.gameObject.activeSelf && (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Run")))
         {
-            StartCoroutine(CoolTimeRun());
+            if (coolltime > 0)
+                coolRun = StartCoroutine(CoolTimeRun());
 
-            UiManager.Instance.ingame.Boss.GetDamage(damage, hitCount);
+            if (UiManager.Instance.ingame.Boss.GetComponent<CanvasGroup>().alpha != 1)
+                UiManager.Instance.ingame.Boss.GetDamage(0, hitCount);
+            else
+                UiManager.Instance.ingame.Boss.GetDamage(damage, hitCount);
 
             for (int i = 0; i < GameManager.Instance.keys.Count; i++)
             {
@@ -104,19 +134,55 @@ public class Skill : MonoBehaviour
 
     IEnumerator CoolTimeRun()
     {
-        cooltimeImg.gameObject.SetActive(true);
-
         float time = 0.0f;
 
-        while (time < coolltime)
+        cooltimeImg.gameObject.SetActive(true);
+
+        if (cooltimeImg2 != null)
         {
-            cooltimeImg.fillAmount = 1f - time / coolltime;
+            cooltimeImg2.gameObject.SetActive(true);
 
-            cooltimeText.text = (coolltime - time).ToString("F1");
+            cooltimeImg.fillAmount = 1f;
+            cooltimeImg2.fillAmount = 1f;
 
-            time += Time.deltaTime;
+            float _coolTime = coolltime / 15 * 7;
+            while (time < _coolTime)
+            {
+                cooltimeImg2.fillAmount = 1f - time / _coolTime;
 
-            yield return null;
+                cooltimeText.text = (coolltime - time).ToString("F1");
+
+                time += Time.deltaTime;
+
+                yield return null;
+            }
+
+            float _time = 0.0f;
+            _coolTime = coolltime / 15 * 8;
+            while (time < _coolTime)
+            {
+                cooltimeImg.fillAmount = 1f - _time / _coolTime;
+
+                cooltimeText.text = (coolltime - time).ToString("F1");
+
+                time += Time.deltaTime;
+                _time += Time.deltaTime;
+
+                yield return null;
+            }
+        }
+        else
+        {
+            while (time < coolltime)
+            {
+                cooltimeImg.fillAmount = 1f - time / coolltime;
+
+                cooltimeText.text = (coolltime - time).ToString("F1");
+
+                time += Time.deltaTime;
+
+                yield return null;
+            }
         }
 
         cooltimeImg.gameObject.SetActive(false);

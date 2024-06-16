@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SkillAction : MonoBehaviour
 {
+    public List<GameObject> Weapon;
+
     IEnumerator startMove(float dis)
     {
         Animator animator = UiManager.Instance.ingame.Character.Main;

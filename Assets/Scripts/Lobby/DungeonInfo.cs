@@ -19,6 +19,8 @@ public class DungeonInfo : MonoBehaviour
 
     int mainCharacterID;
 
+    int dungeonid;
+
     void OnEnable()
     {
         SetDungeonInfo();
@@ -48,6 +50,9 @@ public class DungeonInfo : MonoBehaviour
     void SetDungeon(StageDungeonTable dungeon = null)
     {
         dungeon = dungeon == null ? DungeonSet() : dungeon;
+
+        dungeonid = dungeon.id;
+
         SpriteAtlas spriteAtlas = Resources.Load<SpriteAtlas>("Atlas/Character");
         SpriteAtlas spriteAtlasI = Resources.Load<SpriteAtlas>("Atlas/Icon");
 
@@ -143,6 +148,7 @@ public class DungeonInfo : MonoBehaviour
 
     public void LoadSceneDungeon()
     {
+        GameManager.Instance.userData.lastStage = dungeonid;
         UiManager.Instance.Action(2);
         SceneManager.LoadScene(2);
     }

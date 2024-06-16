@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Ingame : MonoBehaviour
 {
@@ -8,6 +10,7 @@ public class Ingame : MonoBehaviour
     public Transform SkillGroup;
     public Transform Skills;
     public Tiktok Tiktok;
+    public Transform Quest;
 
     public Boss Boss;
     public CharacterController Character;
@@ -17,6 +20,8 @@ public class Ingame : MonoBehaviour
     public List<GameObject> Key;
 
     public GameObject characterObj;
+
+    public Transform Over;
 
     void Update()
     {
@@ -33,6 +38,14 @@ public class Ingame : MonoBehaviour
         Tiktok.TimeSet();
 
         SetKey();
+
+
+        for (int i = 0; i < Quest.childCount; i++)
+        {
+            QuestTable quest = TableManager.Instance.GetFirstQuest();
+            Quest.GetChild(i).GetChild(0).GetComponent<TMP_Text>().text= string.Format(TableManager.Instance.GetLocalizeText(quest.des));
+            Quest.GetChild(i).GetChild(1).GetComponent<TMP_Text>().text = string.Format("[{0}/{1}]", 0, quest.accomplishValue);
+        }
     }
 
     void SetKey()
@@ -67,5 +80,21 @@ public class Ingame : MonoBehaviour
 
         for (int i = 0; i < Key.Count; i++)
             Key[i].SetActive(mode == Mode.PC && UiManager.Instance.setting.ShowKey);
+    }
+
+    public void GameOver(bool win)
+    {
+        if (win)
+            GameManager.Instance.userData.clearStage = GameManager.Instance.userData.lastStage;
+
+        Over.gameObject.SetActive(true);
+        Over.GetChild(0).gameObject.SetActive(win);
+        Over.GetChild(1).gameObject.SetActive(!win);
+    }
+
+    public void Lobby()
+    {
+        UiManager.Instance.Action(1);
+        SceneManager.LoadScene(0);
     }
 }
