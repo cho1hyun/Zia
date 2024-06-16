@@ -49,12 +49,12 @@ public class Skill : MonoBehaviour
 
     public void UseSkill()
     {
-        if (!cooltimeImg.gameObject.activeSelf)
+        Animator animator = UiManager.Instance.ingame.Character.Main;
+        if (!cooltimeImg.gameObject.activeSelf && (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Run")))
         {
             StartCoroutine(CoolTimeRun());
 
             UiManager.Instance.ingame.Boss.GetDamage(damage, hitCount);
-
 
             for (int i = 0; i < GameManager.Instance.keys.Count; i++)
             {
@@ -63,32 +63,32 @@ public class Skill : MonoBehaviour
                     switch (i)
                     {
                         case 4:
-                            Character.Instance.Main.SetTrigger("Skill0");
+                            animator.SetTrigger("Skill0");
 
-                            if (Character.Instance.Main.GetInteger("Type") == 90000)
+                            if (animator.GetInteger("Type") == 90000)
                             {
-                                Character.Instance.Main.SetInteger("AttackCount", atkCount);
+                                animator.SetInteger("AttackCount", atkCount);
                                 atkCount = atkCount >= 4 ? 0 : atkCount + 1;
                             }
-                            Debug.Log(atkCount);
+
                             break;
                         case 5:
-                            Character.Instance.Main.SetTrigger("Evasion");
+                            animator.SetTrigger("Evasion");
                             break;
                         case 6:
-                            Character.Instance.SwitchCharacter();
+                            UiManager.Instance.ingame.Character.SwitchCharacter();
                             break;
                         case 7:
-                            Character.Instance.Main.SetTrigger("Skill1");
+                            animator.SetTrigger("Skill1");
                             break;
                         case 8:
-                            Character.Instance.Main.SetTrigger("Skill2");
+                            animator.SetTrigger("Skill2");
                             break;
                         case 9:
-                            Character.Instance.Main.SetTrigger("Skill3");
+                            animator.SetTrigger("Skill3");
                             break;
                         case 10:
-                            Character.Instance.Main.SetTrigger("Ult");
+                            animator.SetTrigger("Ult");
                             break;
                         case 11:
                             break;

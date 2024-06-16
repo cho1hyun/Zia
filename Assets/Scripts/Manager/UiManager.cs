@@ -14,6 +14,8 @@ public class UiManager : MonoBehaviour
 
     public Ingame ingame;
 
+    public Story Story;
+
     public Setting setting;
 
     public GameObject toast;
@@ -28,7 +30,11 @@ public class UiManager : MonoBehaviour
     {
         if (InPutTrue())
         {
-            if (lobby.gameObject.activeSelf && !ingame.gameObject.activeSelf)
+            if (Story.gameObject.activeSelf)
+            {
+                Story.SkipBtn();
+            }
+            else if (lobby.gameObject.activeSelf && !ingame.gameObject.activeSelf)
             {
                 if (setting.gameObject.activeSelf)
                 {
@@ -80,7 +86,7 @@ public class UiManager : MonoBehaviour
         if (transform.GetChild(0).gameObject.activeSelf)
             return false;
 
-        if (transform.GetChild(4).gameObject.activeSelf)
+        if (transform.GetChild(5).gameObject.activeSelf)
             return false;
 
         if (transform.GetChild(6).gameObject.activeSelf)

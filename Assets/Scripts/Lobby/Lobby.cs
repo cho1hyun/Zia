@@ -3,6 +3,17 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+public enum window
+{
+    None,
+    Setting,
+    Notice,
+    Shop,
+    Character,
+    Dungeon,
+    exit,
+}
+
 public class Lobby : MonoBehaviour
 {
     public Transform UserTexts;
@@ -24,27 +35,32 @@ public class Lobby : MonoBehaviour
         StartCoroutine(GameManagerWait());
     }
 
+    public void CloseWindow(window open = window.None)
+    {
+        if (UiManager.Instance.setting.gameObject.activeSelf && open!=window.Setting)
+            UiManager.Instance.setting.SetSetting(false);
+
+        if (Notice.gameObject.activeSelf && open != window.Notice)
+            Notice.Open(false);
+
+        if (DungeonInfo.gameObject.activeSelf && open != window.Dungeon)
+            DungeonInfo.gameObject.SetActive(false);
+
+        if (CharacterInfo.gameObject.activeSelf && open != window.Character)
+            CharacterInfo.OpenCharacter(false);
+
+        if (Shop.gameObject.activeSelf && open != window.Shop)
+            Shop.SetActive(false);
+
+        if (exit.activeSelf && open != window.exit)
+            exit.SetActive(false);
+    }
+
     public void OpenShop()
     {
-        if (gameObject.activeSelf)
-        {
-            if (UiManager.Instance.setting.gameObject.activeSelf)
-                UiManager.Instance.setting.SetSetting(false);
+        CloseWindow(window.Shop);
 
-            if (Notice.gameObject.activeSelf)
-                Notice.Open(false);
-
-            if (DungeonInfo.gameObject.activeSelf)
-                DungeonInfo.gameObject.SetActive(false);
-
-            if (CharacterInfo.gameObject.activeSelf)
-                CharacterInfo.OpenCharacter(false);
-
-            if (exit.activeSelf)
-                exit.SetActive(false);
-
-            Shop.SetActive(true);
-        }
+        Shop.SetActive(true);
     }
 
     IEnumerator GameManagerWait()

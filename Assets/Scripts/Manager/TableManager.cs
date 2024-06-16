@@ -152,9 +152,30 @@ public class TableManager
         return ScenarioData[id];
     }
 
+    public List<ScenarioTable> GetScenarioList(int scenario)
+    {
+        List<ScenarioTable> scenarios = new List<ScenarioTable>();
+
+        bool bookmark = false;
+
+        foreach (var item in ScenarioData)
+        {
+            if (item.Value.ScenarioID == scenario)
+                bookmark = true;
+
+            if (bookmark)
+                scenarios.Add(item.Value);
+
+            if (item.Value.Command == ScenarioCommand.EndScenario && bookmark)
+                return scenarios;
+        }
+
+        return scenarios;
+    } 
+
     public string GetScenarioText(int id)
     {
-        if (!IsInitialized)
+        if (!IsInitialized || id == 0)
             return string.Empty;
 
         switch (GameManager.Instance.language)

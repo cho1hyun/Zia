@@ -62,8 +62,9 @@ public class DungeonInfo : MonoBehaviour
 
         QuestTable quest = TableManager.Instance.GetFirstQuest();
 
-        Quest.GetChild(1).GetComponent<TMP_Text>().text = string.Format(TableManager.Instance.GetLocalizeText(quest.name));
-        Quest.GetChild(2).GetComponent<TMP_Text>().text = string.Format(TableManager.Instance.GetLocalizeText(quest.des));
+        Quest.GetChild(0).GetComponent<TMP_Text>().text = string.Format(TableManager.Instance.GetLocalizeText(quest.name));
+        Quest.GetChild(1).GetComponent<TMP_Text>().text = string.Format(TableManager.Instance.GetLocalizeText(quest.des));
+        Quest.GetChild(2).GetComponent<TMP_Text>().text = string.Format("[{0}/{1}]", 0, quest.accomplishValue);
 
         PrevBtn.SetActive(TableManager.Instance.GetPreviousStageDungeon(dungeon.id) != dungeon);
         NextBtn.SetActive(TableManager.Instance.GetNextStageDungeon(dungeon.id) != dungeon);
@@ -142,6 +143,7 @@ public class DungeonInfo : MonoBehaviour
 
     public void LoadSceneDungeon()
     {
+        UiManager.Instance.Action(2);
         SceneManager.LoadScene(2);
     }
 }

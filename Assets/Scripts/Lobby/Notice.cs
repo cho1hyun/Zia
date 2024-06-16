@@ -30,6 +30,9 @@ public class Notice : MonoBehaviour
     public void Open(bool active)
     {
         gameObject.SetActive(active);
+
+        if (active)
+            Set(0);
     }
 
     public void Link()

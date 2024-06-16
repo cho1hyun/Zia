@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-public class Character : MonoBehaviour
+public class CharacterController : MonoBehaviour
 {
-    public static Character Instance;
-
     public float speed;
     public float rotateSpeed;
 
@@ -20,11 +18,6 @@ public class Character : MonoBehaviour
     float z;
     bool back;
 
-    void Awake()
-    {
-        StartCoroutine(GameManagerWait());
-    }
-
     void Update()
     {
         if (Main != null && (Main.GetCurrentAnimatorStateInfo(0).IsName("Idle") || Main.GetCurrentAnimatorStateInfo(0).IsName("Run")))
@@ -37,6 +30,23 @@ public class Character : MonoBehaviour
 
             AnimMove(GetKeyInput() != Vector3.zero);
         }
+    }
+
+    public void SetCharacter(int num = 0)
+    {
+        for (int i = 0; i < Characters.Count; i++)
+        {
+            Animator cha = Instantiate(Resources.Load("Character/" + GameManager.Instance.userData.characterSet[0][i].id) as GameObject, Characters[i]).GetComponent<Animator>();
+            cha.SetInteger("Type", GameManager.Instance.userData.characterSet[num][i].id);
+
+            if (Main == null)
+                Main = cha.GetComponent<Animator>();
+        }
+
+        a = GameManager.Instance.keys[0];
+        b = GameManager.Instance.keys[1];
+        c = GameManager.Instance.keys[2];
+        d = GameManager.Instance.keys[3];
     }
 
     Vector3 GetKeyInput()
@@ -95,42 +105,5 @@ public class Character : MonoBehaviour
         Characters[n] = transform;
 
         Main = Characters[0].GetChild(0).GetComponent<Animator>();
-    }
-
-    IEnumerator GameManagerWait()
-    {
-        Instance = this;
-
-        while (Characters == null || Characters.Count <= 0 || Characters[0].childCount <= 0 || Characters[0].GetChild(0).GetComponent<Animator>() == null)
-        {
-            yield return null;
-        }
-
-        Main = Characters[0].GetChild(0).GetComponent<Animator>();
-
-        for (int i = 0; i < Characters.Count; i++)
-        {
-            Characters[i].GetChild(0).GetComponent<Animator>().SetInteger("Type", int.Parse(Regex.Replace(Characters[i].GetChild(0).name, @"\D", string.Empty)));
-        }
-
-        a = KeyCode.UpArrow;
-        b = KeyCode.DownArrow;
-        c = KeyCode.LeftArrow;
-        d = KeyCode.RightArrow;
-
-        float time = 0.0f;
-        while (GameManager.Instance == null && time < 10.0f)
-        {
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        if (time < 10.0f)
-        {
-            a = GameManager.Instance.keys[0];
-            b = GameManager.Instance.keys[1];
-            c = GameManager.Instance.keys[2];
-            d = GameManager.Instance.keys[3];
-        }
     }
 }

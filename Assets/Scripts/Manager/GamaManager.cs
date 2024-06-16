@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public enum LoadingTableResult
 {
@@ -36,6 +37,10 @@ public class GameManager : MonoBehaviour
     public Action amountChange;
 
     public LoadingTableResult LoadResult { get; private set; }
+
+    public AudioMixer mixer;
+    public List<AudioClip> Bgms;
+    public List<AudioClip> Effects;
 
     void Awake()
     {

@@ -10,24 +10,29 @@ public class Ingame : MonoBehaviour
     public Tiktok Tiktok;
 
     public Boss Boss;
-    public Character Character;
+    public CharacterController Character;
 
     public List<GameObject> ModePc;
     public List<GameObject> ModeMobile;
     public List<GameObject> Key;
 
-    void Start()
+    public GameObject characterObj;
+
+    void Update()
     {
+        Time.timeScale = UiManager.Instance.setting.gameObject.activeSelf ? 0 : 1;
+    }
+
+    public void setDungeon()
+    {
+        Character = Instantiate(characterObj).GetComponent<CharacterController>();
+        Character.SetCharacter();
+
         SetViewMode(GameManager.Instance.mode);
 
         Tiktok.TimeSet();
 
         SetKey();
-    }
-
-    void Update()
-    {
-        Time.timeScale = UiManager.Instance.setting.gameObject.activeSelf ? 0 : 1;
     }
 
     void SetKey()
