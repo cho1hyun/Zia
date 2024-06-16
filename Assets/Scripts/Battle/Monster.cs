@@ -17,6 +17,8 @@ public class Monster : MonoBehaviour
             {
                 UiManager.Instance.ingame.Boss.GetDamage(500, 1);
             }
+
+            Debug.Log("¸ÂÀ½");
         }
     }
 }

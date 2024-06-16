@@ -61,6 +61,9 @@ public class CharacterController : MonoBehaviour
         if (Main.GetCurrentAnimatorStateInfo(0).IsName("Evasion"))
             return false;
 
+        if (Main.GetCurrentAnimatorStateInfo(0).IsName("Evasion 1"))
+            return false;
+
         if (Main.GetCurrentAnimatorStateInfo(0).IsName("Death"))
             return false;
 
@@ -73,7 +76,8 @@ public class CharacterController : MonoBehaviour
         {
             for (int i = 0; i < Main.GetComponent<SkillAction>().Weapon.Count; i++)
             {
-                Main.GetComponent<SkillAction>().Weapon[i].GetComponent<MeshCollider>().isTrigger = !Main.GetCurrentAnimatorStateInfo(0).IsName("Idle") && !Main.GetCurrentAnimatorStateInfo(0).IsName("Run") && !Main.GetCurrentAnimatorStateInfo(0).IsName("Hit") && !Main.GetCurrentAnimatorStateInfo(0).IsName("Evasion") && !Main.GetCurrentAnimatorStateInfo(0).IsName("Death");
+                Main.GetComponent<SkillAction>().Weapon[i].GetComponent<BoxCollider>().isTrigger = AtkCheck();
+                Main.GetComponent<SkillAction>().Weapon[i].GetComponent<MeshCollider>().isTrigger = AtkCheck();
             }
         }
     }

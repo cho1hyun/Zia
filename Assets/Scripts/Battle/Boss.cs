@@ -9,6 +9,7 @@ public class Boss : MonoBehaviour
     public Transform HpGroup;
     public TMP_Text HpPer;
     public TMP_Text Hpcount;
+    public TMP_Text Name;
     public Image Gage;
 
     public CanvasGroup Combo;
@@ -35,10 +36,6 @@ public class Boss : MonoBehaviour
 
     bool weakness;
 
-    private void Awake()
-    {
-        nowHp = Hp;
-    }
     void OnDisable()
     {
 
@@ -57,7 +54,17 @@ public class Boss : MonoBehaviour
 
     public void SetBossInfo()
     {
+        MonsterTable boss = GetBossInfo(TableManager.Instance.GetStageDungeon(GameManager.Instance.userData.lastStage));
+        Hp= boss.hp;
+        nowHp = Hp;
+        Name.text= string.Format(TableManager.Instance.GetLocalizeText(boss.name));
+    }
 
+    MonsterTable GetBossInfo(StageDungeonTable dungeon = null)
+    {
+        StageSpawnOrderTable spawnOrder = TableManager.Instance.GetStageSpawnOrder(dungeon.SpawnOrder1_GroupID);
+        StageSpawnTable spawn = TableManager.Instance.GetStageSpawnData(spawnOrder.SpawnSet5_ID == 0 ? (spawnOrder.SpawnSet4_ID == 0 ? (spawnOrder.SpawnSet3_ID == 0 ? (spawnOrder.SpawnSet2_ID == 0 ? spawnOrder.SpawnSet1_ID : spawnOrder.SpawnSet2_ID) : spawnOrder.SpawnSet3_ID) : spawnOrder.SpawnSet4_ID) : spawnOrder.SpawnSet5_ID);
+        return TableManager.Instance.GetMonster(spawn.mob2_ID);
     }
 
     public void GetDamage(int Damage, int hitCount)

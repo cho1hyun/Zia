@@ -3202,6 +3202,7 @@ GameObject:
   - component: {fileID: 1777360545998854213}
   - component: {fileID: 690328037818609961}
   - component: {fileID: 3122405525346953751}
+  - component: {fileID: 9188662137173086397}
   m_Layer: 0
   m_Name: Dagger_01(Clone)
   m_TagString: Weapon
@@ -3296,6 +3297,27 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -8367231247473855917, guid: c4c480dac43036944a3f1f903988339f, type: 3}
+--- !u!65 &9188662137173086397
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4373549492713079365}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.1, y: 0.2, z: 0.1}
+  m_Center: {x: -0.00023766365, y: 0.06311884, z: -0.0005672132}
 --- !u!1 &4387792677249171980
 GameObject:
   m_ObjectHideFlags: 0
@@ -4940,6 +4962,7 @@ GameObject:
   - component: {fileID: 4296764305629998655}
   - component: {fileID: 1437178382740320812}
   - component: {fileID: 6082798961954863945}
+  - component: {fileID: 8832914068865162008}
   m_Layer: 0
   m_Name: Dagger_01(Clone)
   m_TagString: Weapon
@@ -5034,6 +5057,27 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -8367231247473855917, guid: c4c480dac43036944a3f1f903988339f, type: 3}
+--- !u!65 &8832914068865162008
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6121196791910475797}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.1, y: 0.4, z: 0.1}
+  m_Center: {x: -0.00023768241, y: 0.063118875, z: -0.0005672282}
 --- !u!1 &6126705412589168898
 GameObject:
   m_ObjectHideFlags: 0
