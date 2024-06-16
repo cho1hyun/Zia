@@ -270,6 +270,32 @@ public class TableManager
         return spriteAtlas.GetSprite(fileNasme);
     }
 
+    public Color GetAttributeColor(Attribute_ attribute_)
+    {
+        switch (attribute_)
+        {
+            case Attribute_.None:
+                return Color.white;
+            case Attribute_.Mare:
+                ColorUtility.TryParseHtmlString("#7BEAFFFF", out Color Mare);
+                return Mare;
+            case Attribute_.Flamma:
+                ColorUtility.TryParseHtmlString("#E23636FF", out Color Flamma);
+                return Flamma;
+            case Attribute_.Vita:
+                ColorUtility.TryParseHtmlString("#54FB8CFF", out Color Vita);
+                return Vita;
+            case Attribute_.Lucere:
+                ColorUtility.TryParseHtmlString("#F4FFDDFF", out Color Lucere);
+                return Lucere;
+            case Attribute_.Umbra:
+                ColorUtility.TryParseHtmlString("#6B5B7BFF", out Color Umbra);
+                return Umbra;
+            default:
+                return Color.black;
+        }
+    }
+
     public CharacterSkillTable GetCharacterSkillSet(int id)
     {
         if (!IsInitialized)

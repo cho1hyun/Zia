@@ -28,7 +28,7 @@ public class Skill : MonoBehaviour
 
     public void Update()
     {
-        if (GameManager.Instance.mode == Mode.PC && !UiManager.Instance.setting.gameObject.activeSelf && Input.GetKey(key) && delay <= 0f)
+        if (isPlay())
         {
             UseSkill();
 
@@ -41,9 +41,33 @@ public class Skill : MonoBehaviour
         }
     }
 
+    bool isPlay()
+    {
+        if (GameManager.Instance.mode != Mode.PC)
+            return false;
+
+        if (UiManager.Instance.ingame.Character == null)
+            return false;
+
+        if (UiManager.Instance.setting.gameObject.activeSelf)
+            return false;
+
+        if (UiManager.Instance.ingame.Over.gameObject.activeSelf)
+            return false;
+
+        if (delay > 0f)
+            return false;
+
+        if (Input.GetKey(key))
+            return true;
+
+        return false;
+    }
+
     public void ChangeCharacter()
     {
-        StopCoroutine(coolRun);
+        if (coolRun != null)
+            StopCoroutine(coolRun);
         cooltimeImg.gameObject.SetActive(false);
     }
 
@@ -60,6 +84,10 @@ public class Skill : MonoBehaviour
 
         SkillImg.sprite= spriteAtlas.GetSprite(id.ToString());
         coolltime = TableManager.Instance.GetCharacterSkill(TableManager.Instance.GetCharacter(id).skillset, SkillType.Ult).cool;
+
+        Color color = TableManager.Instance.GetAttributeColor(TableManager.Instance.GetCharacter(id).attribute);
+        transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().color = color;
+        transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Image>().color = color;
     }
 
     public void SetKey(KeyCode code)

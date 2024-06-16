@@ -37,7 +37,7 @@ public class Lobby : MonoBehaviour
 
     public void CloseWindow(window open = window.None)
     {
-        if (UiManager.Instance.setting.gameObject.activeSelf && open!=window.Setting)
+        if (UiManager.Instance.setting.gameObject.activeSelf && open != window.Setting)
             UiManager.Instance.setting.SetSetting(false);
 
         if (Notice.gameObject.activeSelf && open != window.Notice)

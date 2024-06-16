@@ -20,7 +20,7 @@ public class Tiktok : MonoBehaviour
     {
         float time = 0.0f;
 
-        while (time < timeLimit)
+        while (time < timeLimit && !UiManager.Instance.ingame.Over.gameObject.activeSelf)
         {
             timeImage.fillAmount = 1f - time / timeLimit;
 
@@ -35,5 +35,8 @@ public class Tiktok : MonoBehaviour
 
             yield return null;
         }
+
+        UiManager.Instance.ingame.GameOver(false);
+
     }
 }

@@ -22,7 +22,7 @@ public class CharacterController : MonoBehaviour
 
     void Update()
     {
-        if (Main != null && (Main.GetCurrentAnimatorStateInfo(0).IsName("Idle") || Main.GetCurrentAnimatorStateInfo(0).IsName("Run")))
+        if (MoveCheck() && (Main.GetCurrentAnimatorStateInfo(0).IsName("Idle") || Main.GetCurrentAnimatorStateInfo(0).IsName("Run")))
         {
             transform.GetChild(0).localScale = new Vector3(1, 1, back ? -1 : 1);
 
@@ -33,14 +33,48 @@ public class CharacterController : MonoBehaviour
             AnimMove(GetKeyInput() != Vector3.zero);
         }
 
-        AtkCheck();
+        AttackCheck();
     }
 
-    void AtkCheck()
+    bool MoveCheck()
     {
-        for (int i = 0; i < Main.GetComponent<SkillAction>().Weapon.Count; i++)
+        if (Main == null)
+            return false;
+
+        if (UiManager.Instance.ingame.Over.gameObject.activeSelf)
+            return false;
+
+        return true;
+    }
+
+    bool AtkCheck()
+    {
+        if (Main.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+            return false;
+
+        if (Main.GetCurrentAnimatorStateInfo(0).IsName("Run"))
+            return false;
+
+        if (Main.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
+            return false;
+
+        if (Main.GetCurrentAnimatorStateInfo(0).IsName("Evasion"))
+            return false;
+
+        if (Main.GetCurrentAnimatorStateInfo(0).IsName("Death"))
+            return false;
+
+        return true;
+    }
+
+    void AttackCheck()
+    {
+        if (MoveCheck())
         {
-            Main.GetComponent<SkillAction>().Weapon[i].GetComponent<MeshCollider>().isTrigger = !Main.GetCurrentAnimatorStateInfo(0).IsName("Idle") && !Main.GetCurrentAnimatorStateInfo(0).IsName("Run") && !Main.GetCurrentAnimatorStateInfo(0).IsName("Hit") && !Main.GetCurrentAnimatorStateInfo(0).IsName("Evasion") && !Main.GetCurrentAnimatorStateInfo(0).IsName("Death");
+            for (int i = 0; i < Main.GetComponent<SkillAction>().Weapon.Count; i++)
+            {
+                Main.GetComponent<SkillAction>().Weapon[i].GetComponent<MeshCollider>().isTrigger = !Main.GetCurrentAnimatorStateInfo(0).IsName("Idle") && !Main.GetCurrentAnimatorStateInfo(0).IsName("Run") && !Main.GetCurrentAnimatorStateInfo(0).IsName("Hit") && !Main.GetCurrentAnimatorStateInfo(0).IsName("Evasion") && !Main.GetCurrentAnimatorStateInfo(0).IsName("Death");
+            }
         }
     }
 

@@ -30,6 +30,8 @@ public class Ingame : MonoBehaviour
 
     public void setDungeon()
     {
+        Over.gameObject.SetActive(false);
+
         Character = Instantiate(characterObj).GetComponent<CharacterController>();
         Character.SetCharacter();
 
@@ -84,12 +86,15 @@ public class Ingame : MonoBehaviour
 
     public void GameOver(bool win)
     {
-        if (win)
-            GameManager.Instance.userData.clearStage = GameManager.Instance.userData.lastStage;
+        if (!Over.gameObject.activeSelf)
+        {
+            if (win)
+                GameManager.Instance.userData.clearStage = GameManager.Instance.userData.lastStage;
 
-        Over.gameObject.SetActive(true);
-        Over.GetChild(0).gameObject.SetActive(win);
-        Over.GetChild(1).gameObject.SetActive(!win);
+            Over.gameObject.SetActive(true);
+            Over.GetChild(0).gameObject.SetActive(!win);
+            Over.GetChild(1).gameObject.SetActive(win);
+        }
     }
 
     public void Lobby()

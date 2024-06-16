@@ -39,6 +39,11 @@ public class Boss : MonoBehaviour
         nowHp = Hp;
     }
 
+    public void SetBossInfo()
+    {
+
+    }
+
     public void GetDamage(int Damage, int hitCount)
     {
         if (hitCount == 0)
@@ -110,6 +115,11 @@ public class Boss : MonoBehaviour
 
         Hpcount.transform.parent.gameObject.SetActive(Hps != 0);
         Hpcount.text = Hps.ToString();
+
+        if (nowHp == 0)
+        {
+            UiManager.Instance.ingame.GameOver(true);
+        }
     }
 
     IEnumerator ComboUp(int hitCount)
