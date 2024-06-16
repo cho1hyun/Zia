@@ -4322,7 +4322,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooltimeImg: {fileID: 1266383495}
-  SkillImg: {fileID: 80890269}
   cooltimeText: {fileID: 1102850679}
   keyObj: {fileID: 133409236}
   keyText: {fileID: 133409238}
@@ -18927,7 +18926,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooltimeImg: {fileID: 1216294248}
-  SkillImg: {fileID: 1218099993}
   cooltimeText: {fileID: 2036268773}
   keyObj: {fileID: 389982512}
   keyText: {fileID: 1755399778}
@@ -21603,7 +21601,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooltimeImg: {fileID: 565096630}
-  SkillImg: {fileID: 438638019}
   cooltimeText: {fileID: 890580067}
   keyObj: {fileID: 536423973}
   keyText: {fileID: 536423975}
@@ -34816,7 +34813,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooltimeImg: {fileID: 398884086}
-  SkillImg: {fileID: 1386212023}
   cooltimeText: {fileID: 1660743858}
   keyObj: {fileID: 1596047207}
   keyText: {fileID: 1924968278}
@@ -65747,7 +65743,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooltimeImg: {fileID: 2121603005}
-  SkillImg: {fileID: 1350685826}
   cooltimeText: {fileID: 1554934985}
   keyObj: {fileID: 676721693}
   keyText: {fileID: 676721695}
@@ -76595,7 +76590,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooltimeImg: {fileID: 93514890}
-  SkillImg: {fileID: 1592614694}
   cooltimeText: {fileID: 874696115}
   keyObj: {fileID: 614282485}
   keyText: {fileID: 614282487}
@@ -77835,7 +77829,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooltimeImg: {fileID: 711194346}
-  SkillImg: {fileID: 1615715601}
   cooltimeText: {fileID: 1852050366}
   keyObj: {fileID: 2088787464}
   keyText: {fileID: 2088787466}
@@ -84755,7 +84748,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooltimeImg: {fileID: 404587076}
-  SkillImg: {fileID: 1751656684}
   cooltimeText: {fileID: 467363021}
   keyObj: {fileID: 775553874}
   keyText: {fileID: 775553876}
@@ -93337,7 +93329,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooltimeImg: {fileID: 1736026110}
-  SkillImg: {fileID: 956675413}
   cooltimeText: {fileID: 704141944}
   keyObj: {fileID: 2145796862}
   keyText: {fileID: 2145796864}
