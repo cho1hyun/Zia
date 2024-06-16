@@ -6,6 +6,7 @@ public class Pade : MonoBehaviour
 {
     public int count;
     int first = 0;
+    public bool tuto;
 
     public void PadeOnAction()
     {
@@ -26,7 +27,7 @@ public class Pade : MonoBehaviour
 
         for (int i = 0; i < UiManager.Instance.transform.childCount; i++)
         {
-            if (UiManager.Instance.transform.GetChild(i) != transform)
+            if (UiManager.Instance.transform.GetChild(i) != transform && UiManager.Instance.transform.GetChild(i).gameObject != gameObject)
                 UiManager.Instance.transform.GetChild(i).gameObject.SetActive(i == count);
         }
 
@@ -42,6 +43,12 @@ public class Pade : MonoBehaviour
         if (count != 1 || first != 0)
         {
             PadeOff();
+        }
+
+        if (tuto)
+        {
+            tuto = false;
+            UiManager.Instance.Story.SetScenario(0);
         }
     }
 

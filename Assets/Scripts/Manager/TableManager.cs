@@ -109,7 +109,7 @@ public class TableManager
     }
 
     Dictionary<int, LocalizeTextTable> LocalizeTextData;
-    Dictionary<string, ScenarioTable> ScenarioData;
+    Dictionary<int, ScenarioTable> ScenarioData;
     Dictionary<int, ScenarioTextTable> ScenarioTextData;
     Dictionary<int, NoticeTable> NoticeData;
     Dictionary<int, GoodsTable> GoodsData;
@@ -144,7 +144,7 @@ public class TableManager
         }
     }
 
-    public ScenarioTable GetScenario(string id)
+    public ScenarioTable GetScenario(int id)
     {
         if (!IsInitialized)
             return null;
@@ -164,7 +164,11 @@ public class TableManager
                 bookmark = true;
 
             if (bookmark)
+            {
                 scenarios.Add(item.Value);
+                Debug.Log(item.Value.Command.ToString()+","+ item.Value.Arg1.ToString() + ","+ item.Value.Arg2.ToString() + ","+ item.Value.Arg3.ToString() + ","+ GetScenarioText(item.Value.Text));
+            }
+
 
             if (item.Value.Command == ScenarioCommand.EndScenario && bookmark)
                 return scenarios;
@@ -309,7 +313,7 @@ public class TableManager
         if (!IsInitialized)
             return null;
 
-        return CharacterSkillData[id].skillSet[skillid];
+        return GetCharacterSkillSet(id).skillSet[skillid];
     }
 
     public SkillSet GetCharacterSkill(int id, SkillType type)
@@ -317,7 +321,7 @@ public class TableManager
         if (!IsInitialized)
             return null;
 
-        foreach (var item in CharacterSkillData[id].skillSet)
+        foreach (var item in GetCharacterSkillSet(id).skillSet)
         {
             if (item.Value.type == type)
             {

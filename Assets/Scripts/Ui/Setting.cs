@@ -203,8 +203,9 @@ public class Setting : MonoBehaviour
 
     public void Gotuto()
     {
+        UiManager.Instance.pade.tuto = true;
+        UiManager.Instance.Story.GetComponent<CanvasGroup>().alpha = 0;
         UiManager.Instance.Action(2);
         SceneManager.LoadScene(2);
-        UiManager.Instance.Story.SetScenario(1);
     }
 }

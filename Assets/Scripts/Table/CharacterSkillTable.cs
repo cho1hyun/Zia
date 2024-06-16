@@ -123,7 +123,6 @@ public class CharacterSkillTable_Parser
                 groupData.effectDuration2 = float.TryParse(data[i][nameof(groupData.effectDuration2)].ToString(), out float effectDuration2) ? effectDuration2 : 0;
                 groupData.icon = (string)data[i][nameof(groupData.icon)];
                 groupData.se = (string)data[i][nameof(groupData.se)];
-
             }
 
             if (groupDic.ContainsKey(groupData.name) == false)

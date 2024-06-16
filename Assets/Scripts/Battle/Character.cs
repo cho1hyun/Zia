@@ -107,6 +107,7 @@ public class CharacterController : MonoBehaviour
     void SetSkill()
     {
         int skillset = TableManager.Instance.GetCharacter(characterId[0]).skillset;
+        Debug.Log(skillset);
         UiManager.Instance.ingame.SkillGroup.GetChild(3).GetComponent<Skill>().SetSkill(TableManager.Instance.GetCharacterSkill(skillset, SkillType.skill1));
         UiManager.Instance.ingame.SkillGroup.GetChild(4).GetComponent<Skill>().SetSkill(TableManager.Instance.GetCharacterSkill(skillset, SkillType.skill2));
         UiManager.Instance.ingame.SkillGroup.GetChild(5).GetComponent<Skill>().SetSkill(TableManager.Instance.GetCharacterSkill(skillset, SkillType.skill3));

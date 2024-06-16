@@ -51,10 +51,10 @@ public class ScenarioTable
 
 public class ScenarioTable_Parser
 {
-    public Dictionary<string, ScenarioTable> Parse()
+    public Dictionary<int, ScenarioTable> Parse()
     {
         List<Dictionary<string, object>> data = TableManager.Instance.SetData();
-        Dictionary<string, ScenarioTable> dic = new Dictionary<string, ScenarioTable>();
+        Dictionary<int, ScenarioTable> dic = new Dictionary<int, ScenarioTable>();
 
         for (var i = 0; i < data.Count; i++)
         {
@@ -62,14 +62,20 @@ public class ScenarioTable_Parser
 
             tableData.id = (string)data[i][nameof(tableData.Command)];
             tableData.Command = Enum.TryParse(Regex.Replace(data[i][nameof(tableData.Command)].ToString(), @"\D", ""), out ScenarioCommand type) ? type : ScenarioCommand.None;
+            if (tableData.Command == ScenarioCommand.None)
+            {
+                tableData.Command = Enum.TryParse(tableData.id, out ScenarioCommand type_) ? type_ : ScenarioCommand.None;
+            }
             tableData.ScenarioID = int.TryParse(Regex.Replace(data[i][nameof(tableData.Command)].ToString(), @"[^0-9]", ""), out int ScenarioID) ? ScenarioID : 0;
             tableData.Arg1 = (string)data[i][nameof(tableData.Arg1)];
             tableData.Arg2 = (string)data[i][nameof(tableData.Arg2)];
             tableData.Arg3 = (string)data[i][nameof(tableData.Arg3)];
             tableData.Text = int.TryParse(data[i][nameof(tableData.Text)].ToString(), out int Text) ? Text : 0;
 
-            if (!dic.ContainsKey(tableData.id))
-                dic.Add(tableData.id, tableData);
+            Debug.Log(tableData.id + "," + tableData.Command.ToString() + "," + tableData.ScenarioID + "," + tableData.Arg1 + "," + tableData.Arg2 + "," + tableData.Arg3 + "," + tableData.Text);
+
+            if (!dic.ContainsKey(i))
+                dic.Add(i, tableData);
         }
 
         return dic;

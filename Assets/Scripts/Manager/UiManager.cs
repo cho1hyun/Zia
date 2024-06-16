@@ -32,7 +32,7 @@ public class UiManager : MonoBehaviour
         {
             if (Story.gameObject.activeSelf)
             {
-                Story.SkipBtn();
+                Story.SkipObj.SetActive(!Story.gameObject.activeSelf);
             }
             else if (lobby.gameObject.activeSelf && !ingame.gameObject.activeSelf)
             {

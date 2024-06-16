@@ -82,8 +82,7 @@ public class Skill : MonoBehaviour
     public void SetSkill(SkillSet set)
     {
         SpriteAtlas spriteAtlas = Resources.Load<SpriteAtlas>("Atlas/Skill");
-
-        SkillImg.sprite = spriteAtlas.GetSprite(set.name.ToString()); ;
+        SkillImg.sprite = spriteAtlas.GetSprite(set.name.ToString());
         coolltime = set.cool;
     }
     public void SetSkillUlt(int id)

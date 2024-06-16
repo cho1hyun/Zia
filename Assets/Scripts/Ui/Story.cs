@@ -13,213 +13,245 @@ public class Story : MonoBehaviour
     public Transform AutoOnOff;
     public GameObject SkipObj;
 
-    public List<GameObject> TextOver;
+    public GameObject TextOver;
     public List<GameObject> Allui;
 
-    bool skip;
     bool auto;
-    bool next;
+    bool texting;
 
     Coroutine scenarioCorutine;
-    List<ScenarioTable> skipScenario;
+    List<ScenarioTable> scenarios;
+
+    int skipCount;
+    List<int> now;
+
+    string txt;
 
     public void SetScenario(int scrnario)
     {
-        GetComponent<CanvasGroup>().alpha = 0;
+        auto = false;
+        now = new List<int>();
+
+        GetComponent<CanvasGroup>().alpha = 1;
 
         gameObject.SetActive(true);
 
-        Auto();
+        scenarios = TableManager.Instance.GetScenarioList(scrnario);
 
-        List<ScenarioTable> scenarios = TableManager.Instance.GetScenarioList(scrnario);
-        skipScenario = new List<ScenarioTable>();
         for (int i = 0; i < scenarios.Count; i++)
         {
+            if (scenarios[i].Command == ScenarioCommand.Text)
+            {
+                now.Add(i);
+            }
+
             if (scenarios[i].Command == ScenarioCommand.Skip)
             {
-                skip = true;
-            }
-            if (skip)
-            {
-                skipScenario.Add(scenarios[i]);
+                skipCount = i;
             }
         }
 
-        scenarioCorutine = StartCoroutine(SetScenarios(scenarios));
-    }
+        AutoOnOff.GetChild(1).gameObject.SetActive(auto);
+        AutoOnOff.GetChild(2).gameObject.SetActive(!auto);
 
-    public void SkipBtn()
+        SetScenarios();
+    }
+    IEnumerator ShowText()
     {
-        if (Allui[0].activeSelf)
+        TextField.text = string.Empty;
+        for (int i = 0; i < txt.Length; i++)
         {
-            SkipObj.SetActive(!SkipObj.activeSelf);
+            TextField.text += txt[i];
+            yield return new WaitForSeconds(0.05f);
+        }
+
+        if (!auto)
+        {
+            texting = false;
+            TextOver.SetActive(true);
         }
         else
         {
-            for (int i = 0; i < Allui.Count; i++)
-            {
-                Allui[i].SetActive(true);
-            }
+            now[0]++;
+            SetScenarios();
         }
+        scenarioCorutine = null;
     }
 
-    public void Skip()
+    IEnumerator Wait(float t)
     {
-        SkipBtn();
-
-        StopCoroutine(scenarioCorutine);
-
-        for (int i = 0; i < TextOver.Count; i++)
+        float time = 0.0f;
+        while (time < t)
         {
-            TextOver[i].SetActive(false);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        now[0]++;
+        SetScenarios();
+
+        scenarioCorutine = null;
+    }
+
+    IEnumerator Shake(float t)
+    {
+        float time = 0.0f;
+        while (time < t)
+        {
+            time += Time.deltaTime;
+            yield return null;
         }
 
-        StartCoroutine(SetScenarios(skipScenario));
+        BackGround.GetComponent<Animator>().SetBool("Shake", false);
+
+        now[0]++;
+        SetScenarios();
+
+        scenarioCorutine = null;
     }
 
-    public void AutoBtn()
+    void FillText()
     {
-        auto = !auto;
-        Auto();
+        if (scenarioCorutine != null)
+            StopCoroutine(scenarioCorutine);
+
+        TextField.text = txt;
+        texting = false;
+        TextOver.SetActive(true);
     }
 
-    void Auto()
+
+    void SetScenarios()
     {
-        AutoOnOff.GetChild(1).gameObject.SetActive(auto);
-        AutoOnOff.GetChild(2).gameObject.SetActive(!auto);
+        SpriteAtlas spriteAtlasS = Resources.Load<SpriteAtlas>("Atlas/Scenario");
+
+        switch (scenarios[now[0]].Command)
+        {
+            case ScenarioCommand.None:
+                break;
+            case ScenarioCommand.Start:
+                break;
+            case ScenarioCommand.Text:
+                texting = true;
+                txt = TableManager.Instance.GetScenarioText(scenarios[now[0]].Text);
+                Debug.Log(txt);
+                scenarioCorutine = StartCoroutine(ShowText());
+                if (scenarios[now[0]].Arg1 != string.Empty)
+                    NameField.text = TableManager.Instance.GetScenarioText(int.Parse(scenarios[now[0]].Arg1));
+                break;
+            case ScenarioCommand.Tip:
+                break;
+            case ScenarioCommand.FadeIn:
+                UiManager.Instance.Action(0);
+                scenarioCorutine = StartCoroutine(Wait(float.Parse(scenarios[now[0]].Arg1)));
+                break;
+            case ScenarioCommand.FadeOut:
+                GetComponent<CanvasGroup>().alpha = 1;
+                UiManager.Instance.pade.PadeOff();
+                scenarioCorutine = StartCoroutine(Wait(float.Parse(scenarios[now[0]].Arg1)));
+                break;
+            case ScenarioCommand.SendMessage:
+                break;
+            case ScenarioCommand.Wait:
+                scenarioCorutine = StartCoroutine(Wait(float.Parse(scenarios[now[0]].Arg1)));
+                break;
+            case ScenarioCommand.WaitInput:
+                //
+                break;
+            case ScenarioCommand.Bg:
+                BackGround.gameObject.SetActive(true);
+                BackGround.sprite = spriteAtlasS.GetSprite(scenarios[now[0]].Arg1);
+                break;
+            case ScenarioCommand.BgOff:
+                BackGround.gameObject.SetActive(false);
+                break;
+            case ScenarioCommand.Bgm:
+                //
+                break;
+            case ScenarioCommand.StopBgm:
+                //
+                break;
+            case ScenarioCommand.Se:
+                //
+                break;
+            case ScenarioCommand.StopSe:
+                //
+                break;
+            case ScenarioCommand.Sprite:
+                break;
+            case ScenarioCommand.SpriteOff:
+                break;
+            case ScenarioCommand.Shake:
+                BackGround.GetComponent<Animator>().SetBool("Shake", true);
+                scenarioCorutine = StartCoroutine(Shake(float.Parse(scenarios[now[0]].Arg1)));
+                break;
+            case ScenarioCommand.Effect:
+                break;
+            case ScenarioCommand.CharacterLeft:
+                break;
+            case ScenarioCommand.CharacterLeftOff:
+                break;
+            case ScenarioCommand.CharacterCenter:
+                break;
+            case ScenarioCommand.CharacterCenterOff:
+                break;
+            case ScenarioCommand.CharacterRight:
+                break;
+            case ScenarioCommand.CharacterRightOff:
+                break;
+            case ScenarioCommand.Skip:
+                break;
+            case ScenarioCommand.EndScenario:
+                UiManager.Instance.Action(0);
+                break;
+            default:
+                break;
+        }
     }
 
     public void View()
     {
-        TextOver[0].SetActive(true);
-
         for (int i = 0; i < Allui.Count; i++)
         {
             Allui[i].SetActive(false);
         }
     }
 
+    public void Auto()
+    {
+        auto = !auto;
+        AutoOnOff.GetChild(1).gameObject.SetActive(auto);
+        AutoOnOff.GetChild(2).gameObject.SetActive(!auto);
+    }
+
+    public void Skip()
+    {
+        if (scenarioCorutine != null)
+            StopCoroutine(scenarioCorutine);
+
+        now[0] = skipCount;
+        SetScenarios();
+    }
+
     public void Onclick()
     {
-        if (Allui[0].activeSelf)
+        if (texting && !auto)
         {
-            next = true;
-
-            for (int i = 0; i < TextOver.Count; i++)
-            {
-                TextOver[i].SetActive(false);
-            }
+            FillText();
         }
-        else
+
+        if (TextOver.activeSelf)
+        {
+            TextOver.SetActive(false);
+            now[0]++;
+            SetScenarios();
+        }
+
+        if (Allui[0].activeSelf)
         {
             for (int i = 0; i < Allui.Count; i++)
             {
                 Allui[i].SetActive(true);
             }
-        }
-    }
-
-    IEnumerator SetScenarios(List<ScenarioTable> scenarios)
-    {
-        SpriteAtlas spriteAtlasS = Resources.Load<SpriteAtlas>("Atlas/Scenario");
-
-        for (int i = 0; i < scenarios.Count; i++)
-        {
-            next = false;
-
-            switch (scenarios[i].Command)
-            {
-                case ScenarioCommand.None:
-                    break;
-                case ScenarioCommand.Start:
-                    break;
-                case ScenarioCommand.Text:
-                    TextField.text = string.Empty;
-                    string text = TableManager.Instance.GetScenarioText(scenarios[i].Text);
-                    NameField.text = TableManager.Instance.GetScenarioText(int.Parse(scenarios[i].Arg1));
-                    for (int j = 0; j < text.Length; j++)
-                    {
-                        TextField.text += text[j];
-                        yield return null;
-                    }
-                    for (int j = 0; j < TextOver.Count; j++)
-                    {
-                        TextOver[i].SetActive(true);
-                    }
-                    while (!auto && !next)
-                    {
-                        yield return null;
-                    }
-                    break;
-                case ScenarioCommand.Tip:
-                    break;
-                case ScenarioCommand.FadeIn:
-                    UiManager.Instance.Action(0);
-                    yield return new WaitForSeconds(float.Parse(scenarios[i].Arg1));
-                    break;
-                case ScenarioCommand.FadeOut:
-                    GetComponent<CanvasGroup>().alpha = 1;
-                    UiManager.Instance.pade.PadeOff();
-                    yield return new WaitForSeconds(float.Parse(scenarios[i].Arg1));
-                    break;
-                case ScenarioCommand.SendMessage:
-                    break;
-                case ScenarioCommand.Wait:
-                    break;
-                case ScenarioCommand.WaitInput:
-                    break;
-                case ScenarioCommand.Bg:
-                    BackGround.gameObject.SetActive(true);
-                    BackGround.sprite = spriteAtlasS.GetSprite(scenarios[i].Arg1);
-                    break;
-                case ScenarioCommand.BgOff:
-                    BackGround.gameObject.SetActive(false);
-                    break;
-                case ScenarioCommand.Bgm:
-                    //
-                    break;
-                case ScenarioCommand.StopBgm:
-                    //
-                    break;
-                case ScenarioCommand.Se:
-                    //
-                    break;
-                case ScenarioCommand.StopSe:
-                    //
-                    break;
-                case ScenarioCommand.Sprite:
-                    break;
-                case ScenarioCommand.SpriteOff:
-                    break;
-                case ScenarioCommand.Shake:
-                    BackGround.GetComponent<Animator>().SetBool("Shake", true);
-                    yield return new WaitForSeconds(float.Parse(scenarios[i].Arg1));
-                    BackGround.GetComponent<Animator>().SetBool("Shake", false);
-                    break;
-                case ScenarioCommand.Effect:
-                    break;
-                case ScenarioCommand.CharacterLeft:
-                    break;
-                case ScenarioCommand.CharacterLeftOff:
-                    break;
-                case ScenarioCommand.CharacterCenter:
-                    break;
-                case ScenarioCommand.CharacterCenterOff:
-                    break;
-                case ScenarioCommand.CharacterRight:
-                    break;
-                case ScenarioCommand.CharacterRightOff:
-                    break;
-                case ScenarioCommand.Skip:
-                    break;
-                case ScenarioCommand.EndScenario:
-                    UiManager.Instance.Action(4);
-                    break;
-                default:
-                    break;
-            }
-
-            yield return null;
         }
     }
 }
