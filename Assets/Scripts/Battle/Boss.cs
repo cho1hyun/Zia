@@ -31,12 +31,28 @@ public class Boss : MonoBehaviour
     Coroutine damages;
     Coroutine combos;
     Coroutine gages;
+    Coroutine max;
 
     bool weakness;
 
     private void Awake()
     {
         nowHp = Hp;
+    }
+    void OnDisable()
+    {
+
+        if (damages != null)
+            StopCoroutine(damages);
+
+        if (combos != null)
+            StopCoroutine(combos);
+
+        if (gages != null)
+            StopCoroutine(gages);
+
+        if (max != null)
+            StopCoroutine(max);
     }
 
     public void SetBossInfo()
@@ -184,7 +200,7 @@ public class Boss : MonoBehaviour
         Gage.rectTransform.sizeDelta = new Vector2(32.0f + 56f * gage, Gage.rectTransform.sizeDelta.y);
 
         if (gage >= 10)
-            StartCoroutine(GageMax());
+            max = StartCoroutine(GageMax());
     }
 
     IEnumerator GageMax()

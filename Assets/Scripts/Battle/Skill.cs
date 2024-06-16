@@ -26,7 +26,7 @@ public class Skill : MonoBehaviour
 
     Coroutine coolRun;
 
-    public void Update()
+    void Update()
     {
         if (isPlay())
         {
@@ -38,6 +38,14 @@ public class Skill : MonoBehaviour
         if (delay > 0f)
         {
             delay -= Time.deltaTime;
+        }
+    }
+
+    void OnDisable()
+    {
+        if (coolRun != null)
+        {
+            StopCoroutine(coolRun);
         }
     }
 
@@ -107,7 +115,9 @@ public class Skill : MonoBehaviour
         if (!cooltimeImg.gameObject.activeSelf && (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Run")))
         {
             if (coolltime > 0)
+            {
                 coolRun = StartCoroutine(CoolTimeRun());
+            }
 
             if (UiManager.Instance.ingame.Boss.GetComponent<CanvasGroup>().alpha != 1)
                 UiManager.Instance.ingame.Boss.GetDamage(0, hitCount);

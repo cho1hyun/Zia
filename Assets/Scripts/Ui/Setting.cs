@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 using System;
+using UnityEngine.SceneManagement;
 
 public class Setting : MonoBehaviour
 {
@@ -192,5 +193,18 @@ public class Setting : MonoBehaviour
             default:
                 return key;
         }
+    }
+
+    public void GoLobby()
+    {
+        UiManager.Instance.Action(1);
+        SceneManager.LoadScene(1);
+    }
+
+    public void Gotuto()
+    {
+        UiManager.Instance.Action(2);
+        SceneManager.LoadScene(2);
+        UiManager.Instance.Story.SetScenario(1);
     }
 }

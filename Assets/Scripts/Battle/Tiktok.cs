@@ -11,16 +11,25 @@ public class Tiktok : MonoBehaviour
 
     public float timeLimit;
 
+    public Coroutine time;
+
+
+    void OnDisable()
+    {
+        if (time != null)
+            StopCoroutine(time);
+    }
+
     public void TimeSet()
     {
-        StartCoroutine(TimeRun());
+        time = StartCoroutine(TimeRun());
     }
 
     IEnumerator TimeRun()
     {
         float time = 0.0f;
 
-        while (time < timeLimit && !UiManager.Instance.ingame.Over.gameObject.activeSelf)
+        while (UiManager.Instance.ingame.Over != null && time < timeLimit && !UiManager.Instance.ingame.Over.gameObject.activeSelf) 
         {
             timeImage.fillAmount = 1f - time / timeLimit;
 

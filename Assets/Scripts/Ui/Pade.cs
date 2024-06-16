@@ -14,6 +14,7 @@ public class Pade : MonoBehaviour
             case 0:
                 return;
             case 1:
+                UiManager.Instance.ingame.OffDungoen();
                 UiManager.Instance.lobby.CloseWindow();
                 break;
             case 4:
@@ -38,10 +39,9 @@ public class Pade : MonoBehaviour
                 break;
         }
 
-        if (first == 0 && count != 1)
+        if (count != 1 || first != 0)
         {
             PadeOff();
-            first++;
         }
     }
 
@@ -53,5 +53,10 @@ public class Pade : MonoBehaviour
     public void PadeOff()
     {
         GetComponent<Animator>().SetTrigger("Pade");
+
+        if (first == 0)
+        {
+            first++;
+        }
     }
 }

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Ingame : MonoBehaviour
 {
@@ -23,15 +22,8 @@ public class Ingame : MonoBehaviour
 
     public Transform Over;
 
-    void Update()
-    {
-        Time.timeScale = UiManager.Instance.setting.gameObject.activeSelf ? 0 : 1;
-    }
-
     public void setDungeon()
     {
-        Over.gameObject.SetActive(false);
-
         Character = Instantiate(characterObj).GetComponent<CharacterController>();
         Character.SetCharacter();
 
@@ -86,7 +78,7 @@ public class Ingame : MonoBehaviour
 
     public void GameOver(bool win)
     {
-        if (!Over.gameObject.activeSelf)
+        if (Over != null && !Over.gameObject.activeSelf)
         {
             if (win)
                 GameManager.Instance.userData.clearStage = GameManager.Instance.userData.lastStage;
@@ -99,7 +91,12 @@ public class Ingame : MonoBehaviour
 
     public void Lobby()
     {
-        UiManager.Instance.Action(1);
-        SceneManager.LoadScene(0);
+        UiManager.Instance.setting.GoLobby();
+    }
+
+    public void OffDungoen()
+    {
+        if (Over != null)
+            Over.gameObject.SetActive(false);
     }
 }

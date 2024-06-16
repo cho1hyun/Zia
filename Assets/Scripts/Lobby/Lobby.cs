@@ -37,22 +37,22 @@ public class Lobby : MonoBehaviour
 
     public void CloseWindow(window open = window.None)
     {
-        if (UiManager.Instance.setting.gameObject.activeSelf && open != window.Setting)
+        if (UiManager.Instance.setting != null && UiManager.Instance.setting.gameObject.activeSelf && open != window.Setting)
             UiManager.Instance.setting.SetSetting(false);
 
-        if (Notice.gameObject.activeSelf && open != window.Notice)
+        if (Notice != null && Notice.gameObject.activeSelf && open != window.Notice)
             Notice.Open(false);
 
-        if (DungeonInfo.gameObject.activeSelf && open != window.Dungeon)
+        if (DungeonInfo != null && DungeonInfo.gameObject.activeSelf && open != window.Dungeon)
             DungeonInfo.gameObject.SetActive(false);
 
-        if (CharacterInfo.gameObject.activeSelf && open != window.Character)
+        if (CharacterInfo != null && CharacterInfo.gameObject.activeSelf && open != window.Character) 
             CharacterInfo.OpenCharacter(false);
 
-        if (Shop.gameObject.activeSelf && open != window.Shop)
+        if (Shop != null && Shop.gameObject.activeSelf && open != window.Shop)
             Shop.SetActive(false);
 
-        if (exit.activeSelf && open != window.exit)
+        if (exit != null && exit.activeSelf && open != window.exit)
             exit.SetActive(false);
     }
 

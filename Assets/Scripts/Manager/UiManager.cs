@@ -73,6 +73,8 @@ public class UiManager : MonoBehaviour
                 }
             }
         }
+
+        Time.timeScale = setting.gameObject.activeSelf && !setting.SettingUI.activeSelf && !pade.gameObject.activeSelf ? 0 : 1;
     }
 
     bool InPutTrue()
