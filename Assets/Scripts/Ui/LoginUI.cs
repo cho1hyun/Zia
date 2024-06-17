@@ -68,8 +68,11 @@ public class LoginUI : MonoBehaviour
 
     public void Login(bool _login = false)
     {
-        GetComponent<Animator>().SetTrigger("Exit");
+        if (gameObject.activeSelf)
+            GetComponent<Animator>().SetTrigger("Exit");
 
         login = _login;
     }
+
+
 }

@@ -150,6 +150,7 @@ public class DungeonInfo : MonoBehaviour
     {
         GameManager.Instance.userData.lastStage = dungeonid;
         UiManager.Instance.Action(2);
+        GameManager.Instance.gameObject.GetComponent<SoundManager>().PlayBgm("StageBGM");
         SceneManager.LoadScene(3);
     }
 }

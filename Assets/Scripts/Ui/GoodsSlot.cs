@@ -14,7 +14,9 @@ public class GoodsSlot : MonoBehaviour
 
     void OnEnable()
     {
-        StartCoroutine(GameManagerWait());
+        AmountChange();
+
+        GameManager.Instance.amountChange += AmountChange;
     }
 
     public void AmountChange()
@@ -32,21 +34,5 @@ public class GoodsSlot : MonoBehaviour
     public void OpenShop()
     {
         UiManager.Instance.lobby.OpenShop();
-    }
-
-    IEnumerator GameManagerWait()
-    {
-        while (GameManager.Instance == null)
-        {
-            yield return null;
-        }
-
-        if (GameManager.Instance.load)
-        {
-
-            AmountChange();
-
-            GameManager.Instance.amountChange += AmountChange;
-        }
     }
 }

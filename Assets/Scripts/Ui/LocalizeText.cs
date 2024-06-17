@@ -11,7 +11,12 @@ public class LocalizeText : MonoBehaviour
 
     void Awake()
     {
-        StartCoroutine(GameManagerWait());
+        if (ReferenceEquals(_text, null))
+            _text = GetComponent<TMP_Text>();
+
+        TextChange();
+
+        GameManager.Instance.languageChange += TextChange;
     }
 
     public void TextChange()
@@ -21,23 +26,5 @@ public class LocalizeText : MonoBehaviour
 
         if (_textId == 0 && _randomTextdis.Count > 0)
             _text.text = string.Format(TableManager.Instance.GetLocalizeText(_randomTextdis[Random.Range(0, _randomTextdis.Count)]));
-    }
-
-    IEnumerator GameManagerWait()
-    {
-        while (GameManager.Instance == null)
-        {
-            yield return null;
-        }
-
-        if (GameManager.Instance.load)
-        {
-            if (ReferenceEquals(_text, null))
-                _text = GetComponent<TMP_Text>();
-
-            TextChange();
-
-            GameManager.Instance.languageChange += TextChange;
-        }
     }
 }

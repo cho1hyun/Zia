@@ -15,10 +15,17 @@ public class Pade : MonoBehaviour
             case 0:
                 return;
             case 1:
+                GameManager.Instance.gameObject.GetComponent<SoundManager>().PlayBgm("LobbyBGM001");
+                UiManager.Instance.ingame.OffDungoen();
+                UiManager.Instance.lobby.CloseWindow();
+                break;
+            case 2:
                 UiManager.Instance.ingame.OffDungoen();
                 UiManager.Instance.lobby.CloseWindow();
                 break;
             case 4:
+                GameManager.Instance.gameObject.GetComponent<SoundManager>().StopBgm();
+                UiManager.Instance.Story.gameObject.SetActive(false);
                 PadeOff();
                 return;
             default:

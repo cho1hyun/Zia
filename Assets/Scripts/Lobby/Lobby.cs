@@ -32,7 +32,14 @@ public class Lobby : MonoBehaviour
 
     void OnEnable()
     {
-        StartCoroutine(GameManagerWait());
+        if (openCount == 0)
+        {
+            UserTexts.GetChild(0).GetComponent<TMP_Text>().text = string.Empty;
+            UserTexts.GetChild(1).GetComponent<TMP_Text>().text = GameManager.Instance.userData.userId;
+
+            Notice.gameObject.SetActive(true);
+            openCount++;
+        }
     }
 
     public void CloseWindow(window open = window.None)
@@ -61,29 +68,5 @@ public class Lobby : MonoBehaviour
         CloseWindow(window.Shop);
 
         Shop.SetActive(true);
-    }
-
-    IEnumerator GameManagerWait()
-    {
-        while (GameManager.Instance == null)
-        {
-            yield return null;
-        }
-
-        if (openCount == 0 && GameManager.Instance.load)
-        {
-            UserTexts.GetChild(0).GetComponent<TMP_Text>().text = string.Empty;
-            UserTexts.GetChild(1).GetComponent<TMP_Text>().text = GameManager.Instance.userData.userId;
-
-            Notice.gameObject.SetActive(true);
-            openCount++;
-        }
-        else
-        {
-            while (UiManager.Instance == null)
-            {
-                yield return null;
-            }
-        }
     }
 }

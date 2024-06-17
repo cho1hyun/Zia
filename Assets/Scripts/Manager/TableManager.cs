@@ -164,10 +164,7 @@ public class TableManager
                 bookmark = true;
 
             if (bookmark)
-            {
                 scenarios.Add(item.Value);
-                Debug.Log(item.Value.Command.ToString()+","+ item.Value.Arg1.ToString() + ","+ item.Value.Arg2.ToString() + ","+ item.Value.Arg3.ToString() + ","+ GetScenarioText(item.Value.Text));
-            }
 
 
             if (item.Value.Command == ScenarioCommand.EndScenario && bookmark)

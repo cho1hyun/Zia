@@ -195,6 +195,49 @@ public class Setting : MonoBehaviour
         }
     }
 
+    public List<Slider> sliders;
+    public List<bool> onNoff;
+    public List<float> vol;
+    public List<Transform> soundbtn;
+    public List<TMP_Text> soundText;
+
+    public void SoundBtn(int t)
+    {
+        onNoff[t] = !onNoff[t];
+
+        soundbtn[t].GetChild(3).gameObject.SetActive(onNoff[t]);
+
+        sliders[t].value = onNoff[t] ? vol[t] : 0;
+
+        soundText[t].text = string.Format("{0}%", onNoff[t] ? 100 : 0);
+
+        SLIDER_Volume(t);
+    }
+
+    public void SLIDER_Volume(int t)
+    {
+        soundbtn[t].GetChild(0).gameObject.SetActive(onNoff[t] && sliders[t].value >= 0.3f);
+        soundbtn[t].GetChild(1).gameObject.SetActive(onNoff[t] && sliders[t].value >= 0.6f);
+        soundbtn[t].GetChild(2).gameObject.SetActive(onNoff[t] && sliders[t].value >= 1);
+
+        soundText[t].text = string.Format("{0}%", (sliders[t].value * 100).ToString("F2"));
+
+        switch (t)
+	    {
+            case 0:
+                GameManager.Instance.gameObject.GetComponent<SoundManager>().SetMasterVolume(sliders[t].value);
+                break;
+            case 1:
+                GameManager.Instance.gameObject.GetComponent<SoundManager>().SetBgmVolume(sliders[t].value);
+                break;
+            case 2:
+                GameManager.Instance.gameObject.GetComponent<SoundManager>().SetEffectVolume(sliders[t].value);
+                break;
+            default:
+                break;
+	    }
+    }
+
     public void GoLobby()
     {
         UiManager.Instance.Action(1);

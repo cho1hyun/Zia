@@ -72,8 +72,6 @@ public class ScenarioTable_Parser
             tableData.Arg3 = (string)data[i][nameof(tableData.Arg3)];
             tableData.Text = int.TryParse(data[i][nameof(tableData.Text)].ToString(), out int Text) ? Text : 0;
 
-            Debug.Log(tableData.id + "," + tableData.Command.ToString() + "," + tableData.ScenarioID + "," + tableData.Arg1 + "," + tableData.Arg2 + "," + tableData.Arg3 + "," + tableData.Text);
-
             if (!dic.ContainsKey(i))
                 dic.Add(i, tableData);
         }

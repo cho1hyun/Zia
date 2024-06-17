@@ -12,11 +12,13 @@ public class Story : MonoBehaviour
     public TMP_Text NameField;
     public Transform AutoOnOff;
     public GameObject SkipObj;
+    public Transform CharacterSpace;
 
     public GameObject TextOver;
     public List<GameObject> Allui;
 
     bool auto;
+    bool wait;
     bool texting;
 
     Coroutine scenarioCorutine;
@@ -80,6 +82,7 @@ public class Story : MonoBehaviour
 
     IEnumerator Wait(float t)
     {
+        wait = true;
         float time = 0.0f;
         while (time < t)
         {
@@ -88,7 +91,7 @@ public class Story : MonoBehaviour
         }
         now[0]++;
         SetScenarios();
-
+        wait = false;
         scenarioCorutine = null;
     }
 
@@ -119,6 +122,17 @@ public class Story : MonoBehaviour
         TextOver.SetActive(true);
     }
 
+    void SkipWait()
+    {
+        if (scenarioCorutine != null)
+            StopCoroutine(scenarioCorutine);
+
+        wait = false;
+
+        now[0]++;
+        SetScenarios();
+    }
+
 
     void SetScenarios()
     {
@@ -127,13 +141,16 @@ public class Story : MonoBehaviour
         switch (scenarios[now[0]].Command)
         {
             case ScenarioCommand.None:
+                now[0]++;
+                SetScenarios();
                 break;
             case ScenarioCommand.Start:
+                now[0]++;
+                SetScenarios();
                 break;
             case ScenarioCommand.Text:
                 texting = true;
                 txt = TableManager.Instance.GetScenarioText(scenarios[now[0]].Text);
-                Debug.Log(txt);
                 scenarioCorutine = StartCoroutine(ShowText());
                 if (scenarios[now[0]].Arg1 != string.Empty)
                     NameField.text = TableManager.Instance.GetScenarioText(int.Parse(scenarios[now[0]].Arg1));
@@ -160,48 +177,99 @@ public class Story : MonoBehaviour
             case ScenarioCommand.Bg:
                 BackGround.gameObject.SetActive(true);
                 BackGround.sprite = spriteAtlasS.GetSprite(scenarios[now[0]].Arg1);
+
+                if (scenarios[now[0]].Arg2 != string.Empty)
+                    scenarioCorutine = StartCoroutine(Wait(float.Parse(scenarios[now[0]].Arg2)));
+
+                else
+                {
+                    now[0]++;
+                    SetScenarios();
+                }
                 break;
             case ScenarioCommand.BgOff:
                 BackGround.gameObject.SetActive(false);
+
+                if (scenarios[now[0]].Arg2 != string.Empty)
+                    scenarioCorutine = StartCoroutine(Wait(float.Parse(scenarios[now[0]].Arg2)));
+
+                else
+                {
+                    now[0]++;
+                    SetScenarios();
+                }
                 break;
             case ScenarioCommand.Bgm:
-                //
+                now[0]++;
+                SetScenarios();
                 break;
             case ScenarioCommand.StopBgm:
-                //
+                now[0]++;
+                SetScenarios();
                 break;
             case ScenarioCommand.Se:
-                //
+                now[0]++;
+                SetScenarios();
                 break;
             case ScenarioCommand.StopSe:
-                //
+                now[0]++;
+                SetScenarios();
                 break;
             case ScenarioCommand.Sprite:
+                now[0]++;
+                SetScenarios();
                 break;
             case ScenarioCommand.SpriteOff:
+                now[0]++;
+                SetScenarios();
                 break;
             case ScenarioCommand.Shake:
                 BackGround.GetComponent<Animator>().SetBool("Shake", true);
                 scenarioCorutine = StartCoroutine(Shake(float.Parse(scenarios[now[0]].Arg1)));
                 break;
             case ScenarioCommand.Effect:
+                now[0]++;
+                SetScenarios();
                 break;
             case ScenarioCommand.CharacterLeft:
+                CharacterSpace.GetChild(0).GetComponent<Image>().sprite = spriteAtlasS.GetSprite(scenarios[now[0]].Arg1);
+                CharacterSpace.GetChild(0).gameObject.SetActive(true);
+                now[0]++;
+                SetScenarios();
                 break;
             case ScenarioCommand.CharacterLeftOff:
+                CharacterSpace.GetChild(0).gameObject.SetActive(true);
+                now[0]++;
+                SetScenarios();
                 break;
             case ScenarioCommand.CharacterCenter:
+                CharacterSpace.GetChild(1).GetComponent<Image>().sprite = spriteAtlasS.GetSprite(scenarios[now[0]].Arg1);
+                CharacterSpace.GetChild(1).gameObject.SetActive(true);
+                now[0]++;
+                SetScenarios();
                 break;
             case ScenarioCommand.CharacterCenterOff:
+                CharacterSpace.GetChild(1).gameObject.SetActive(true);
+                now[0]++;
+                SetScenarios();
                 break;
             case ScenarioCommand.CharacterRight:
+                CharacterSpace.GetChild(2).GetComponent<Image>().sprite = spriteAtlasS.GetSprite(scenarios[now[0]].Arg1);
+                CharacterSpace.GetChild(2).gameObject.SetActive(true);
+                now[0]++;
+                SetScenarios();
                 break;
             case ScenarioCommand.CharacterRightOff:
+                CharacterSpace.GetChild(2).gameObject.SetActive(true);
+                now[0]++;
+                SetScenarios();
                 break;
             case ScenarioCommand.Skip:
+                now[0]++;
+                SetScenarios();
                 break;
             case ScenarioCommand.EndScenario:
-                UiManager.Instance.Action(0);
+                UiManager.Instance.Action(4);
                 break;
             default:
                 break;
@@ -228,8 +296,7 @@ public class Story : MonoBehaviour
         if (scenarioCorutine != null)
             StopCoroutine(scenarioCorutine);
 
-        now[0] = skipCount;
-        SetScenarios();
+        UiManager.Instance.Action(4);
     }
 
     public void Onclick()
@@ -237,6 +304,13 @@ public class Story : MonoBehaviour
         if (texting && !auto)
         {
             FillText();
+            return;
+        }
+
+        if (wait)
+        {
+            SkipWait();
+            return;
         }
 
         if (TextOver.activeSelf)
@@ -244,14 +318,16 @@ public class Story : MonoBehaviour
             TextOver.SetActive(false);
             now[0]++;
             SetScenarios();
+            return;
         }
 
-        if (Allui[0].activeSelf)
+        if (!Allui[0].activeSelf)
         {
             for (int i = 0; i < Allui.Count; i++)
             {
                 Allui[i].SetActive(true);
             }
+            return;
         }
     }
 }
