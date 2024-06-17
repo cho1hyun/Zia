@@ -11,7 +11,10 @@ public class Monster : MonoBehaviour
         if (other.tag == "Weapon" && !other.isTrigger)
         {
             if (!isBoss)
+            {
+                Destroy(transform.parent.gameObject);
                 Destroy(gameObject);
+            }
 
             else
             {

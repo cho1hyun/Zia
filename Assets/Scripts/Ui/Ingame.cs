@@ -27,6 +27,8 @@ public class Ingame : MonoBehaviour
         Character = Instantiate(characterObj).GetComponent<CharacterController>();
         Character.SetCharacter();
 
+        Boss.SetBossInfo();
+
         SetViewMode(GameManager.Instance.mode);
 
         Tiktok.TimeSet();
@@ -78,7 +80,7 @@ public class Ingame : MonoBehaviour
 
     public void GameOver(bool win)
     {
-        if (Over != null && !Over.gameObject.activeSelf)
+        if (!Over.gameObject.activeSelf)
         {
             if (win)
                 GameManager.Instance.userData.clearStage = GameManager.Instance.userData.lastStage;
@@ -96,7 +98,6 @@ public class Ingame : MonoBehaviour
 
     public void OffDungoen()
     {
-        if (Over != null)
-            Over.gameObject.SetActive(false);
+        Over.gameObject.SetActive(false);
     }
 }

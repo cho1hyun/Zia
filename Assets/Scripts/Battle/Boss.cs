@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Boss : MonoBehaviour
 {
@@ -54,7 +55,15 @@ public class Boss : MonoBehaviour
 
     public void SetBossInfo()
     {
-        MonsterTable boss = GetBossInfo(TableManager.Instance.GetStageDungeon(GameManager.Instance.userData.lastStage));
+        MonsterTable boss = null;
+        if (SceneManager.GetActiveScene().name== "CHAPTER0")
+        {
+            boss = GetBossInfo(TableManager.Instance.GetStageDungeon(100000));
+        }
+        else
+        {
+            boss = GetBossInfo(TableManager.Instance.GetStageDungeon(GameManager.Instance.userData.lastStage));
+        }
         Hp= boss.hp;
         nowHp = Hp;
         Name.text= string.Format(TableManager.Instance.GetLocalizeText(boss.name));
@@ -139,7 +148,7 @@ public class Boss : MonoBehaviour
         Hpcount.transform.parent.gameObject.SetActive(Hps != 0);
         Hpcount.text = Hps.ToString();
 
-        if (nowHp == 0)
+        if (Hp != 0 && nowHp == 0)
         {
             UiManager.Instance.ingame.GameOver(true);
         }

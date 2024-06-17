@@ -20,8 +20,6 @@ public class SoundManager : MonoBehaviour
     public float bgmVolume;
     public float effectVolume;
 
-
-
     public AudioClip GetBgmClip(string clipName)
     {
         for (int i = 0; i < Bgms.Count; i++)

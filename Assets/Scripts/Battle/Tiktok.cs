@@ -29,7 +29,7 @@ public class Tiktok : MonoBehaviour
     {
         float time = 0.0f;
 
-        while (UiManager.Instance.ingame.Over != null && time < timeLimit && !UiManager.Instance.ingame.Over.gameObject.activeSelf) 
+        while (time < timeLimit && !UiManager.Instance.ingame.Over.gameObject.activeSelf) 
         {
             timeImage.fillAmount = 1f - time / timeLimit;
 

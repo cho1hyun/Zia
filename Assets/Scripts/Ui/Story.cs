@@ -112,6 +112,21 @@ public class Story : MonoBehaviour
         scenarioCorutine = null;
     }
 
+    IEnumerator BgmOff(float t)
+    {
+        float time = 0.0f;
+        while (time < t)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
+        GameManager.Instance.gameObject.GetComponent<SoundManager>().StopBgm();
+        now[0]++;
+        SetScenarios();
+
+        scenarioCorutine = null;
+    }
+
     void FillText()
     {
         if (scenarioCorutine != null)
@@ -159,20 +174,50 @@ public class Story : MonoBehaviour
                 break;
             case ScenarioCommand.FadeIn:
                 UiManager.Instance.Action(0);
-                scenarioCorutine = StartCoroutine(Wait(float.Parse(scenarios[now[0]].Arg1)));
+
+                if (float.Parse(scenarios[now[0]].Arg1) > 0)
+                {
+                    scenarioCorutine = StartCoroutine(Wait(float.Parse(scenarios[now[0]].Arg1)));
+                }
+                else
+                {
+                    now[0]++;
+                    SetScenarios();
+                }
                 break;
             case ScenarioCommand.FadeOut:
                 GetComponent<CanvasGroup>().alpha = 1;
                 UiManager.Instance.pade.PadeOff();
-                scenarioCorutine = StartCoroutine(Wait(float.Parse(scenarios[now[0]].Arg1)));
+
+                if (float.Parse(scenarios[now[0]].Arg1) > 0)
+                {
+                    scenarioCorutine = StartCoroutine(Wait(float.Parse(scenarios[now[0]].Arg1)));
+                }
+                else
+                {
+                    now[0]++;
+                    SetScenarios();
+                }
                 break;
             case ScenarioCommand.SendMessage:
+                now[0]++;
+                SetScenarios();
                 break;
             case ScenarioCommand.Wait:
-                scenarioCorutine = StartCoroutine(Wait(float.Parse(scenarios[now[0]].Arg1)));
+
+                if (float.Parse(scenarios[now[0]].Arg1) > 0)
+                {
+                    scenarioCorutine = StartCoroutine(Wait(float.Parse(scenarios[now[0]].Arg1)));
+                }
+                else
+                {
+                    now[0]++;
+                    SetScenarios();
+                }
                 break;
             case ScenarioCommand.WaitInput:
-                //
+                now[0]++;
+                SetScenarios();
                 break;
             case ScenarioCommand.Bg:
                 BackGround.gameObject.SetActive(true);
@@ -200,6 +245,8 @@ public class Story : MonoBehaviour
                 }
                 break;
             case ScenarioCommand.Bgm:
+                GameManager.Instance.gameObject.GetComponent<SoundManager>().PlayScenarioBgm(scenarios[now[0]].Arg1);
+
                 now[0]++;
                 SetScenarios();
                 break;
@@ -272,6 +319,8 @@ public class Story : MonoBehaviour
                 UiManager.Instance.Action(4);
                 break;
             default:
+                now[0]++;
+                SetScenarios();
                 break;
         }
     }
