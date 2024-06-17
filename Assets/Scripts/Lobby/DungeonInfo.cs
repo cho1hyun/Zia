@@ -28,17 +28,23 @@ public class DungeonInfo : MonoBehaviour
 
     void SetDungeonInfo(int setNum = 0)
     {
-        SpriteAtlas spriteAtlas = Resources.Load<SpriteAtlas>("Atlas/Icon");
+        SpriteAtlas spriteAtlas = Resources.Load<SpriteAtlas>("Atlas/Icon");        //아이콘 이미지 아틀라스
 
         for (int i = 0; i < Characters.childCount; i++)
         {
             CharacterTable character = TableManager.Instance.GetCharacter(GameManager.Instance.userData.characterSet[setNum][i].id);
-
-            Characters.GetChild(i).GetChild(0).GetComponent<Image>().sprite = spriteAtlas.GetSprite(character.id.ToString());
-            Characters.GetChild(i).GetChild(1).GetComponent<Image>().sprite = TableManager.Instance.GetCharacterAttribute(character.attribute);
-            Characters.GetChild(i).GetChild(2).GetComponent<TMP_Text>().text = character.atk.ToString();
-            Characters.GetChild(i).GetChild(3).GetChild(0).GetComponent<TMP_Text>().text = TableManager.Instance.GetLocalizeText(character.name);
-            Characters.GetChild(i).GetChild(3).GetChild(1).GetComponent<TMP_Text>().text = string.Format(TableManager.Instance.GetLocalizeText(25), GameManager.Instance.userData.characters[character.id].level);
+                                                                                    //3명의 캐릭터로 구성된 프리셋에 있는 각 캐릭터의 정보를 불러와
+            Characters.GetChild(i).GetChild(0).GetComponent<Image>().sprite = 
+                spriteAtlas.GetSprite(character.id.ToString());                       //캐릭터 아이콘
+            Characters.GetChild(i).GetChild(1).GetComponent<Image>().sprite = 
+                TableManager.Instance.GetCharacterAttribute(character.attribute);     //캐릭터 속성
+            Characters.GetChild(i).GetChild(2).GetComponent<TMP_Text>().text = 
+                character.atk.ToString();                                            //캐릭터 전투력
+            Characters.GetChild(i).GetChild(3).GetChild(0).GetComponent<TMP_Text>().text = 
+                TableManager.Instance.GetLocalizeText(character.name);              //캐릭터 이름
+            Characters.GetChild(i).GetChild(3).GetChild(1).GetComponent<TMP_Text>().text =
+                string.Format(TableManager.Instance.GetLocalizeText(25), 
+                GameManager.Instance.userData.characters[character.id].level);      //캐릭터 레벨
             Characters.GetChild(i).GetChild(4).GetComponent<Button>().onClick.AddListener(delegate { SetMainCharacter(character.id); });
         }
 
@@ -106,20 +112,20 @@ public class DungeonInfo : MonoBehaviour
     {
         mainCharacterID = id;
 
-        SpriteAtlas spriteAtlas = Resources.Load<SpriteAtlas>("Atlas/Character");
-        SpriteAtlas spriteAtlasW = Resources.Load<SpriteAtlas>("Atlas/Equip");
+        SpriteAtlas spriteAtlas = Resources.Load<SpriteAtlas>("Atlas/Character");   //캐릭터 이미지 아틀라스
+        SpriteAtlas spriteAtlasW = Resources.Load<SpriteAtlas>("Atlas/Equip");      //장비 이미지 아틀라스
 
-        CharacterTable character = TableManager.Instance.GetCharacter(id);
-        EquipTable equip = TableManager.Instance.GetEquip(GameManager.Instance.userData.characters[id].equip.id);
+        CharacterTable character = TableManager.Instance.GetCharacter(id);          //메인 캐릭터 id를 통해 메인캐릭터 정보와
+        EquipTable equip = TableManager.Instance.GetEquip(GameManager.Instance.userData.characters[id].equip.id);   //캐릭터가 장착중인 장비의 id를 테이블을 통해 장비 정보를 불러와
 
-        MainCharacter.GetChild(0).GetComponent<Image>().sprite = spriteAtlas.GetSprite(character.id.ToString());
-        MainCharacter.GetChild(1).GetChild(0).GetComponent<Image>().sprite = spriteAtlasW.GetSprite(equip.id.ToString());
-        MainCharacter.GetChild(1).GetChild(1).GetComponent<TMP_Text>().text = TableManager.Instance.GetLocalizeText(equip.name);
-        MainCharacter.GetChild(2).GetComponent<TMP_Text>().text = character.atk.ToString();
-        MainCharacter.GetChild(3).GetChild(1).GetChild(0).GetComponent<Image>().sprite = TableManager.Instance.GetCharacterAttribute(character.attribute);
-        MainCharacter.GetChild(3).GetChild(1).GetChild(1).GetComponent<TMP_Text>().text = TableManager.Instance.GetLocalizeText(character.name);
-        MainCharacter.GetChild(3).GetChild(1).GetChild(2).GetComponent<TMP_Text>().text = string.Format(TableManager.Instance.GetLocalizeText(25), GameManager.Instance.userData.characters[id].level);
-
+        MainCharacter.GetChild(0).GetComponent<Image>().sprite = spriteAtlas.GetSprite(character.id.ToString());    //메인 캐릭터 일러스트,
+        MainCharacter.GetChild(1).GetChild(0).GetComponent<Image>().sprite = spriteAtlasW.GetSprite(equip.id.ToString());   //장비 일러스트,
+        MainCharacter.GetChild(1).GetChild(1).GetComponent<TMP_Text>().text = TableManager.Instance.GetLocalizeText(equip.name);    //장비 이름,
+        MainCharacter.GetChild(2).GetComponent<TMP_Text>().text = character.atk.ToString();                                         //캐릭터 전투력,
+        MainCharacter.GetChild(3).GetChild(1).GetChild(0).GetComponent<Image>().sprite = TableManager.Instance.GetCharacterAttribute(character.attribute);  //캐릭터 속성,
+        MainCharacter.GetChild(3).GetChild(1).GetChild(1).GetComponent<TMP_Text>().text = TableManager.Instance.GetLocalizeText(character.name);            //캐릭터 이름,
+        MainCharacter.GetChild(3).GetChild(1).GetChild(2).GetComponent<TMP_Text>().text = string.Format(TableManager.Instance.GetLocalizeText(25), GameManager.Instance.userData.characters[id].level); //캐릭터 레벨을
+                                                                                                                                                            // 값에 맞게 설정
         for (int i = 0; i < Characters.childCount; i++)
         {
             Characters.GetChild(i).GetChild(4).gameObject.SetActive(false);
@@ -150,7 +156,7 @@ public class DungeonInfo : MonoBehaviour
     {
         GameManager.Instance.userData.lastStage = dungeonid;
         UiManager.Instance.Action(2);
-        GameManager.Instance.gameObject.GetComponent<SoundManager>().PlayBgm("StageBGM");
+        GameManager.Instance.gameObject.GetComponent<SoundManager>().PlayBgm(1);
         SceneManager.LoadScene(3);
     }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18386973, g: 0.22901636, b: 0.30311307, a: 1}
+  m_IndirectSpecularColor: {r: 0.1838693, g: 0.22901607, b: 0.30311167, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -51222,6 +51222,7 @@ MonoBehaviour:
   - {fileID: 308959959}
   - {fileID: 1903888726}
   onNoff: 010101
+  onNoff2: 000000
   vol:
   - 1
   - 1
@@ -74911,10 +74912,10 @@ MonoBehaviour:
           m_StringArgument: stageEnter
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 901000833}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1059152995}
+        m_TargetAssemblyTypeName: Setting, Assembly-CSharp
+        m_MethodName: GoLobby
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -103799,7 +103800,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 1927746630}
-  m_Horizontal: 1
+  m_Horizontal: 0
   m_Vertical: 1
   m_MovementType: 1
   m_Elasticity: 0.1

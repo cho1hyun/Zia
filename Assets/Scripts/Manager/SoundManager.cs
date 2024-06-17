@@ -20,11 +20,25 @@ public class SoundManager : MonoBehaviour
     public float bgmVolume;
     public float effectVolume;
 
+    Coroutine bgmcoru;
+
     public AudioClip GetBgmClip(string clipName)
     {
         for (int i = 0; i < Bgms.Count; i++)
         {
             if (Bgms[i].name == clipName)
+            {
+                return Bgms[i];
+            }
+        }
+        return null;
+    }
+
+    public AudioClip GetBgmClip(int clipName)
+    {
+        for (int i = 0; i < Bgms.Count; i++)
+        {
+            if (i == clipName)
             {
                 return Bgms[i];
             }
@@ -44,6 +58,18 @@ public class SoundManager : MonoBehaviour
         return null;
     }
 
+    public AudioClip GetEffectClip(int clipName)
+    {
+        for (int i = 0; i < Effects.Count; i++)
+        {
+            if (i == clipName)
+            {
+                return Bgms[i];
+            }
+        }
+        return null;
+    }
+
     public AudioClip GetScenarioClip(string clipName)
     {
         for (int i = 0; i < Scenario.Count; i++)
@@ -56,10 +82,32 @@ public class SoundManager : MonoBehaviour
         return null;
     }
 
+    public AudioClip GetScenarioClip(int clipName)
+    {
+        for (int i = 0; i < Scenario.Count; i++)
+        {
+            if (i == clipName)
+            {
+                return Bgms[i];
+            }
+        }
+        return null;
+    }
+
     public void PlayBgm(string clipName)
     {
-        bgmSource.clip = GetBgmClip(clipName);
-        bgmSource.Play();
+        if (bgmcoru != null)
+            bgmcoru = null;
+
+        bgmcoru = StartCoroutine(BgmCo(clipName));
+    }
+
+    public void PlayBgm(int clipName)
+    {
+        if (bgmcoru != null)
+            bgmcoru = null;
+
+        bgmcoru = StartCoroutine(BgmCo(clipName));
     }
 
     public void StopBgm()
@@ -88,23 +136,46 @@ public class SoundManager : MonoBehaviour
     public void SetMasterVolume(float vol)
     {
         mixer.SetFloat("Master", vol);
-
         masterVolume = vol;
-        bgmSource.volume = masterVolume * bgmVolume;
-        EffectsSource.volume = masterVolume * bgmVolume;
+
+        bgmSource.volume = bgmVolume * vol;
+        EffectsSource.volume = effectVolume * vol;
     }
 
     public void SetBgmVolume(float vol)
     {
         mixer.SetFloat("Bgm", vol);
-        bgmVolume = masterVolume * bgmVolume;
-        bgmSource.volume = vol;
+        bgmVolume = vol;
+
+        bgmSource.volume = masterVolume * vol;
     }
 
     public void SetEffectVolume(float vol)
     {
         mixer.SetFloat("Effect", vol);
-        effectVolume = masterVolume * bgmVolume;
-        EffectsSource.volume = vol;
+        effectVolume = vol;
+
+        EffectsSource.volume = masterVolume * vol;
+    }
+
+    IEnumerator BgmCo(string clip)
+    {
+        bgmSource.Stop();
+        bgmSource.clip = GetBgmClip(clip);
+        while (!bgmSource.isPlaying)
+        {
+            bgmSource.Play();
+            yield return null;
+        }
+    }
+    IEnumerator BgmCo(int clip)
+    {
+        bgmSource.Stop();
+        bgmSource.clip = GetBgmClip(clip);
+        while (!bgmSource.isPlaying)
+        {
+            bgmSource.Play();
+            yield return null;
+        }
     }
 }
